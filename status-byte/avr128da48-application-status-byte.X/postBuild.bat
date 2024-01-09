@@ -1,0 +1,2 @@
+hexmate r0-FFFFFFFF,%1 -O%1 -FILL=w1:0xFF@0x1400:0x1FFFF
+hexmate %1 -O%1 +-CK=1400-1FFFD@1FFFEg2w-2
