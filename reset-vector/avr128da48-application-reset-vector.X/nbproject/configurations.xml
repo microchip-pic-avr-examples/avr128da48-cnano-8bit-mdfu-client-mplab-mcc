@@ -83,7 +83,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="AVR-Dx_DFP" vendor="Microchip" version="2.3.272"/>
+        <pack name="AVR-Dx_DFP" vendor="Microchip" version="2.4.286"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -323,7 +323,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="AVR-Dx_DFP" vendor="Microchip" version="2.3.272"/>
+        <pack name="AVR-Dx_DFP" vendor="Microchip" version="2.4.286"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
