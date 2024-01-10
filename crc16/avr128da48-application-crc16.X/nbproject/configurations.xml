@@ -69,7 +69,13 @@
       <itemPath>app_da48.mc3</itemPath>
     </logicalFolder>
     <itemPath>postBuild.bat</itemPath>
+    <itemPath>postBuild.bat</itemPath>
+    <itemPath>postBuild.sh</itemPath>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>../../checksum/avr128da48-application-checksum.X</Elem>
+    <Elem>.</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="free" type="2">
