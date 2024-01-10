@@ -41,7 +41,10 @@
             "UART"
         ],
         "keywords": [
-
+            "Melody",
+            "MCC Melody",
+            "Curiosity",
+			"Curiosity Nano"
         ],
         "additionalData": {
             "longDescription": {
