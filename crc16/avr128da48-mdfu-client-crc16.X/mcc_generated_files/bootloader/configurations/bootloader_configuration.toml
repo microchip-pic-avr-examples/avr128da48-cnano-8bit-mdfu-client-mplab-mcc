@@ -1,0 +1,23 @@
+# MCU8 Bootloader Configuration
+
+# Configuration Data Specific to the generated bootloader
+[bootloader]
+IMAGE_FORMAT_VERSION = "0.3.0"
+PAGE_ERASE_KEY = 0x0000
+PAGE_WRITE_KEY = 0x0000
+PAGE_READ_KEY = 0x0000
+BYTE_WRITE_KEY = 0x0000
+DEVICE_ID = 0x001E9708
+WRITE_BLOCK_SIZE = 0x200
+FLASH_START = 0x00001400
+FLASH_END = 0x020000
+EEPROM_START = 0x001400
+EEPROM_END = 0x0015FF
+CONFIG_START = 0x001050
+CONFIG_END = 0x00107F
+ARCH = "AVR"
+VERIFICATION = "CRC-16"
+
+# Data needed by the host
+[host]
+coms = "UART"

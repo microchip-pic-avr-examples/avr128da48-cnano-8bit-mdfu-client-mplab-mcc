@@ -68,8 +68,6 @@
       <itemPath>Makefile</itemPath>
       <itemPath>app_da48.mc3</itemPath>
     </logicalFolder>
-    <itemPath>postBuild.bat</itemPath>
-    <itemPath>postBuild.sh</itemPath>
   </logicalFolder>
   <sourceRootList>
     <Elem>.</Elem>
