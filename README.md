@@ -29,7 +29,7 @@ The Microchip Device Firmware Update (MDFU) is a device firmware update ecosyste
 
 - AVR128DA48 Curiosity Nano [(DM164151)](https://www.microchip.com/en-us/development-tool/DM164151)
 
-[![AVR128DA48_CNano](images\230928-mcu8-photo-dm164151-front-transparent.png)](images\230928-mcu8-photo-dm164151-front-transparent.png)
+[![AVR128DA48_CNano](images\230928-mcu8-photo-dm164151-front-transparent.PNG)](images\230928-mcu8-photo-dm164151-front-transparent.PNG)
 
 ## Setup
 
@@ -229,7 +229,7 @@ In this section, we will walkthrough how to run the examples that are housed in 
 
 1. Open the MDFU Client Project.
 
-[![OpenMDFUProject](images\openProjectMDFU.png)](images\openProjectMDFU.png)
+[![OpenMDFUProject](images\openProjectMDFU.PNG)](images\openProjectMDFU.PNG)
 
 2. Set MDFU Client Project as Main Project.
 
@@ -251,9 +251,7 @@ After initial programming, the LED should be held on.
 **Application Operation**
 1. Open the Application Project that is configured for your selected verification scheme.
 
-[![OpenApp](images\openBtnApp.png)](images\openBtnApp.png)
-
-[![OpenAppProject](images\openProjectApp.png)](images\openProjectApp.png)
+[![OpenAppProject](images\openProjectApp.PNG)](images\openProjectApp.PNG)
 
 2. Set the application project as the Main Project.
 
@@ -273,7 +271,7 @@ Right click, then select Clean and Build
 
 `pyfwimagebuilder build -i "application_hex_file.hex"  -c "mdfu_config_file.toml" -o output.img`
 
-[![build_img](images\BuildTheImage.PNG)](images\BuildTheImage.PNG)
+[![build_img](images\BuildTheImage.png)](images\BuildTheImage.png)
 
 5. Use the **pymdfu** host tool to transfer the application image file to the bootloader.
 
