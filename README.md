@@ -223,7 +223,7 @@ applicationFooter __attribute__((used, section("application_footer"))) = 0xFFFF;
         Example path: ```.\postBuild.bat avr128da48-application-crc32.X.production.hex```
 
 ## Operation
-In this section, we will walkthrough how to run the examples that are housed in this repository. For this example walkthrough we will execute the CRC32 verification example and update the device flash memory with the crc32 application image to demonstrate a successful device firmware update (DFU).
+In this section, we will walkthrough how to run the examples that are housed in this repository. For this example walkthrough we will execute the Checksum verification example and update the device flash memory with the Checksum application image to demonstrate a successful device firmware update (DFU).
 
 **8-Bit MDFU Client Operation**
 
@@ -281,7 +281,7 @@ Right click, then select Clean and Build
 
 **Example Command:**
 
-`pymdfu update serial ./crc32.img --baudrate 9600 --port COM##`
+`pymdfu update serial ./output.img --baudrate 9600 --port COM##`
 
 [![transfer_img](images\SendTheImage.PNG)](images\SendTheImage.PNG)
 
