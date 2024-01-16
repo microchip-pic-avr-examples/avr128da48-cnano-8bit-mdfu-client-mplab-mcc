@@ -2,11 +2,11 @@
 
 [![MCHP](images/microchip.png)](https://www.microchip.com)
 
-# Getting Started with the 8-Bit MDFU Client for AVR128DA48 (MPLAB X)
+# Getting Started With the 8-bit MDFU Client for AVR128DA48 Using MPLAB® X
 
-This repository provides the MPLAB® X projects needed to configure some basic MDFU bootloader solutions for the AVR128DA48 Curiosity Nano Evaluation Board using code generated from the MPLAB® Code Configurator (MCC).
+This is an example on how to use the MPLAB Code Configurator (MCC) generated code for configuring some basic Microchip Device Firmware Update (MDFU) bootloader solutions for AVR128DA48 Curiosity Nano Evaluation board.
 
-The Microchip Device Firmware Update (MDFU) is a device firmware update ecosystem that uses a device agnostic host application to update the application firmware. The application image that is loaded into the host follows a custom file format that includes the device and application-specific parameters needed to perform the update. This repository provides the basic starting point to configure and customize the MCC Melody 8-Bit MDFU Client library on the AVR128DA48 Curiosity Nano development board and also provides instructions for running the examples.
+The MDFU is a device firmware update ecosystem that uses a device agnostic host application to update the application firmware. The application image that is loaded into the host follows a custom file format that includes the device and application-specific parameters needed to perform the update. This repository provides the basic starting point to configure and customize the MCC Melody 8-Bit MDFU Client library on the AVR128DA48 Curiosity Nano development board and also provides instructions for running the examples.
 
 ## Related Documentation
 
@@ -17,13 +17,13 @@ The Microchip Device Firmware Update (MDFU) is a device firmware update ecosyste
 
 ## Software Used
 
-- MPLAB® X IDE 6.15.0 [(MPLAB® X IDE 6.15)](https://www.microchip.com/en-us/development-tools-tools-and-software/mplab-x-ide?utm_source=GitHub&utm_medium=TextLink&utm_campaign=MCU8_MMTCha_MPAE_Examples&utm_content=pic16f18446-cnano-8bit-mdfu-client-mplab-mcc-github)
-- MPLAB® XC8 2.45.0 [(MPLAB® XC8 2.45)](https://www.microchip.com/en-us/development-tools-tools-and-software/mplab-xc-compilers?utm_source=GitHub&utm_medium=TextLink&utm_campaign=MCU8_MMTCha_MPAE_Examples&utm_content=pic16f18446-cnano-8bit-mdfu-client-mplab-mcc-github)
-- MPLAB® Code Configurator (MCC) 5.4.1 [(microchip.com/mplab/mplab-code-configurator)](https://www.microchip.com/mplab/mplab-code-configurator)
-- MPLAB® Code Configurator (MCC) Device Libraries AVR AND ATtiny MCUs [(microchip.com/mplab/mplab-code-configurator)](https://www.microchip.com/mplab/mplab-code-configurator)
-- Python 3.8 or later [(Python)](https://www.python.org/downloads/)
-- pyfwimagebuilder v1.0.1.14 [(pyfwimagebuilder)](https://pypi.org/project/pyfwimagebuilder/)
-- pymdfu v1.0.1.5 [(pymdfu)](https://pypi.org/project/pymdfu/)
+- [MPLAB® X IDE 6.15.0](https://www.microchip.com/en-us/development-tools-tools-and-software/mplab-x-ide?utm_source=GitHub&utm_medium=TextLink&utm_campaign=MCU8_MMTCha_MPAE_Examples&utm_content=pic16f18446-cnano-8bit-mdfu-client-mplab-mcc-github)
+- [MPLAB® XC8 2.45.0](https://www.microchip.com/en-us/development-tools-tools-and-software/mplab-xc-compilers?utm_source=GitHub&utm_medium=TextLink&utm_campaign=MCU8_MMTCha_MPAE_Examples&utm_content=pic16f18446-cnano-8bit-mdfu-client-mplab-mcc-github)
+- [MPLAB® Code Configurator (MCC) 5.4.1](https://www.microchip.com/mplab/mplab-code-configurator)
+- [MPLAB® Code Configurator (MCC) Device Libraries AVR AND ATtiny MCUs](https://www.microchip.com/mplab/mplab-code-configurator)
+- [Python 3.8 or later](https://www.python.org/downloads/)
+- [pyfwimagebuilder v1.0.1.14](https://pypi.org/project/pyfwimagebuilder/)
+- [pymdfu v1.0.1.5](https://pypi.org/project/pymdfu/)
 
 ## Hardware Used
 
@@ -33,81 +33,81 @@ The Microchip Device Firmware Update (MDFU) is a device firmware update ecosyste
 
 ## Setup
 
-The following project setup steps have been followed for each example project pair. If something goes wrong in running these examples, validate that the settings in your project are consistent with the options seen in this section.
+The following project setup is the same for all the example project pairs. If something goes wrong while running these examples, confirm that the settings in the projects are consistent with the options seen in this section.
 
 ### Client Setup
 [![mdfu-builder](images\ProjectConfigurationOverview.PNG)](images\ProjectConfigurationOverview.PNG)
 
 **Clock Control**
-- Prescaler enable: **Disabled**
-- Internal Oscillator Frequency: **20_MHz**
+- Prescaler enable: Disabled
+- Internal Oscillator Frequency: 20_MHz
 
 [![CLK](images\ClockSetup.PNG)](images\ClockSetup.PNG)
 
 **Configuration Bits**
 
 On Configuration Bits UI, configure the BOOT FUSE to an acceptable size.
-For example, if the Program Flash Memory size is 0x20000, then the BOOT FUSE for an AVR device with a page size of 512 would need to be 254 (1 less than the MAX). This will initialize the bootloader partition to be in the address range from 0x00 to 0x1FC00. This will leave 1 page in the  CODE partition.
+For example, if the Program Flash Memory size is 0x20000, then the BOOT FUSE for an AVR device with a page size of 512 would need to be 254 (1 less than the MAX). This will initialize the bootloader partition to be in the address range from 0x00 to 0x1FC00. This will leave one page in the  CODE partition.
 
 For AVR128DA48,
-- BOOTSIZE: **254**
+- BOOTSIZE: 254
 
 [![CFG](images\ConfigBitsSetup.PNG)](images\ConfigBitsSetup.PNG)
 
 **NVM**
-- Generate Flash APIs: **Enabled**
-- Generate EEPROM APIs: **Enabled**
-- Generate Signature Row APIs: **Enabled**
+- Generate Flash APIs: Enabled
+- Generate EEPROM APIs: Enabled
+- Generate Signature Row APIs: Enabled
 
 [![NVM](images\NVMSetup.PNG)](images\NVMSetup.PNG)
 
 **UART**
-- Custom Name: **UART2**
-- Requested Baudrate: **9600**
-- Calculated Baudrate: **9600**
-- Baud Rate Error (%): **0.00**
-- Parity: **None**
-- Data Size: **8**
-- Stop Bits: **1**
-- Flow Control Mode: **None**
-- Redirect Printf to UART: **Disabled**
-- Interrupt Driven: **Disabled**
+- Custom Name: UART2
+- Requested Baudrate: 9600
+- Calculated Baudrate: 9600
+- Baud Rate Error (%): 0.00
+- Parity: None
+- Data Size: 8
+- Stop Bits: 1
+- Flow Control Mode: None
+- Redirect Printf to UART: Disabled
+- Interrupt Driven: Disabled
 
 [![UART](images\UARTDriverSetup.PNG)](images\UARTDriverSetup.PNG)
 
 **USART PLIB**
-- Enable UART Receiver: **Enabled**
-- Enable UART transmitter: **Enabled**
+- Enable UART Receiver: Enabled
+- Enable UART transmitter: Enabled
 
 [![UART_PLIB](images\UARTPLIBSetup.PNG)](images\UARTPLIBSetup.PNG)
 
 **UART Pins**
-- UART TX: **RB5**
-- UART RX: **RB4**
+- UART TX: RB5
+- UART RX: RB4
 
 [![UART_Pins](images\UARTPortsSetup.PNG)](images\UARTPortsSetup.PNG)
 
 **8-Bit MDFU Client**
-- Communication Protocol: **UART**
-- FUSE-BOOTSIZE: **Different for each project based on the verification selected**
-- FUSE-CODESIZE: **Different for each project based on the verification selected**
-- Device ID: **0x1E9708**
-- I/O Pin Indicator: **Enabled**
-- I/O Pin Entry: **Enabled**
-- Memory Verification: **Assigned Based on Example Project Naming Convention**
+- Communication Protocol: UART
+- FUSE-BOOTSIZE: Different for each project based on the verification selected
+- FUSE-CODESIZE: Different for each project based on the verification selected
+- Device ID: 0x1E9708
+- I/O Pin Indicator: Enabled
+- I/O Pin Entry: Enabled
+- Memory Verification: Assigned Based on Example Project Naming Convention
 
 *Example for Checksum Verification*
 
 [![MDFU](images\MDFUClientSetup.PNG)](images\MDFUClientSetup.PNG)
 
 **8-Bit MDFU Client I/O**
-- BOOT INDICATE: **RC6**
-- BOOT ENTRY: **RC7**
+- BOOT INDICATE: RC6
+- BOOT ENTRY: RC7
 
 [![IO-Pins](images\IOPortSetup.PNG)](images\IOPortSetup.PNG)
 
-- BOOT INDICATE: **Start High**
-- BOOT ENTRY: **Weak Pullup**
+- BOOT INDICATE: Start High
+- BOOT ENTRY: Weak Pullup
 
 [![IO-Settings](images\IOPinsSetup.PNG)](images\IOPinsSetup.PNG)
 
@@ -119,14 +119,14 @@ This step is different depending on the compiler you are using.
 AVR-GCC:
 
 If you are using the AVR-GCC compiler, open up project properties and apply the below settings
-avr-ld > Additional options > -Wl,--defsym,__TEXT_REGION_LENGTH__= Application Start Address
+avr-ld>Additional options>-Wl,--defsym,__TEXT_REGION_LENGTH__= Application Start Address
 
 XC8:
 
 If you are using the XC8 compiler, open up project properties and apply the below settings
-XC8 Linker > Additional options > Extra Linker Options > -Wl,--defsym,__TEXT_REGION_LENGTH__= Application Start Address
+XC8 Linker>Additional options>Extra Linker Options>-Wl,--defsym,__TEXT_REGION_LENGTH__= Application Start Address
 
-This value will be the same as it appeared in the MDFU Client UI
+This value will be the same as it appeared in the MDFU Client UI.
 
 [![IO-Settings](images\LinkerSettings.PNG)](images\LinkerSettings.PNG)
 
@@ -134,11 +134,11 @@ This value will be the same as it appeared in the MDFU Client UI
 ### Application Setup
 [![app-builder](images\AppConfigurationOverview.PNG)](images\AppConfigurationOverview.PNG)
 
-**IO Pins**
-- GPIO Output: **RC6**
+**I/O Pins**
+- GPIO Output: RC6
 
 [![app_io](images\AppPortSetup.PNG)](images\AppPortSetup.PNG)
-- Custom Name: **LED**
+- Custom Name: LED
 
 [![app_io_settings](images\LEDSetup.PNG)](images\LEDSetup.PNG)
 
@@ -147,29 +147,29 @@ This value will be the same as it appeared in the MDFU Client UI
 Linker Additional Options
 *Linker Setting*
 
-*This step is different depending on the compiler you are using.*
+This step is different depending on the compiler you are using.
 
 *AVR-GCC*
  * If you are using the AVR-GCC compiler, open up project properties and apply the below settings
 
-    - avr-ld -> Memory Settings -> FLASH segment -> **{*}.text=<{*}{*}Application Start Address_{*}{*}in_words>{*}**
-    - avr-ld -> Additional Options = **-Wl,-u,applicationFooter**
+    - avr-ld>Memory Settings>FLASH segment>{*}.text=<{*}{*}Application Start Address_{*}{*}in_words>{*}
+    - avr-ld>Additional Options=-Wl,-u,applicationFooter
 
- **IMPORTANT NOTE: AVR-GCC Accepts Word Addresses so if you set 0x4000 in the bootloader you should set 0x2000 here.**
+ Note: AVR-gcc accepts word addresses, so if it is set 0x4000 in the bootloader, it must be set to 0x2000 here.
 
 *XC8*
  * If you are using the XC8 compiler, open up project properties and apply the below settings
-    - Linker -> Additional Options -> Extra Linker Options = **-Ttext=<Boot End Address> -Wl,-u,applicationFooter*
+    - Linker>Additional Options>Extra Linker Options=-Ttext=<Boot End Address> -Wl,-u,applicationFooter
 
      [![app_io_settings](images\appLinkerSettings.PNG)](images\appLinkerSettings.PNG) 
       
-      This value will be the same as it appeared in the bootloader UI
-    - Compiler-> Preprocessing and Messages. Check the **Use CCI Syntax** checkbox
+      This value will be the same as it appeared in the bootloader UI.
+    - Compiler>Preprocessing and Messages. Check the **Use CCI Syntax** checkbox
  
      [![app_io_settings](images\appCompilerSettings.PNG)](images\appCompilerSettings.PNG)
 
 *End Application*
- * Open main.c and add logic inside while loop to toggle the onboard LED with 200 ms rate:
+ * Open main.c and add logic inside while loop to toggle the onboard LED with a 200 ms rate:
 ```
 while(1)
 {    
@@ -181,7 +181,7 @@ while(1)
  * Include the delay.h header file
  * At the top of the main file before the main function, copy and paste the following code:
 
- ** Hint: The address presented below in the __at() is PROGMEM_SIZE - 2 since the hash size we are using is 2 bytes.
+ ** Hint: The address presented below in the __at() is PROGMEM_SIZE - 2 since the hash size we are using is two bytes.
 ```
 #include <stdint.h>
 #ifdef __XC8__
@@ -199,7 +199,7 @@ applicationFooter __attribute__((used, section("application_footer"))) = 0xFFFF;
  * Create a new script file called postBuild.bat (for Windows) or postBuild.sh (for Mac or Linux).
 
    - The postBuild file can be created by right-clicking the project folder in the MPLAB X Projects tab and navigating to:
-    New > Other... > Other > Empty File
+    New>Other...> Other>Empty File
    - Enter the name postBuild for File Name and add your required extension (.bat or .sh).
    - Click Finish
    -  You should have a new file either named "postBuild.bat" or "postBuild.sh"
@@ -211,19 +211,20 @@ applicationFooter __attribute__((used, section("application_footer"))) = 0xFFFF;
         To perform the calculation and store the result: 
         
         ```hexmate %1 -O%1 +-CK=10000-1FFFD@1FFFEg2w-2```
-   - Add the path to MPLAB X which contains hexmate application to your environment variable **PATH**
-    Example path(default):
+   - Add the path to MPLAB X which contains hexmate application to your environment variable **PATH**.
 
+    Example path(default):
         ```C:\Program Files\Microchip\MPLABX\v6.15\mplab_platform\bin``` 
 
  * Compile the project
  * Running the postBuild script
 
-        Copy and paste the following command in command prompt: ***postBuild${ShExtension} ${ImagePath}***
+        Copy and paste the following command in command prompt: **postBuild${ShExtension} ${ImagePath}**
+
         Example path: ```.\postBuild.bat avr128da48-application-crc32.X.production.hex```
 
 ## Operation
-In this section, we will walkthrough how to run the examples that are housed in this repository. For this example walkthrough we will execute the Checksum verification example and update the device flash memory with the Checksum application image to demonstrate a successful device firmware update (DFU).
+In this section, we will walkthrough how to run the examples in this repository. This example shows how to execute the Checksum verification example and update the device flash memory with the Checksum application image to demonstrate a successful device firmware update (DFU).
 
 **8-Bit MDFU Client Operation**
 
@@ -239,13 +240,14 @@ In this section, we will walkthrough how to run the examples that are housed in 
 
 [![CleanBuild](images\CleanAndBuildMDFU.png)](images\CleanAndBuildMDFU.png)
 
-4. Program the MDFU Client Project
+4. Program the MDFU Client Project.
 
 [![ProgramMDFU](images\ProgramMDFU.png)](images\ProgramMDFU.png)
 
 **Bootloader Operation after initial programming**
 
-After initial programming, the LED should be held on.
+After the initial programming, the LED must be on.
+
 [![MDFU_BootMode](images\AVR128DA48_BootMode.png)](images\AVR128DA48_BootMode.png)
 
 **Application Operation**
@@ -263,7 +265,7 @@ Right click, then select Clean and Build
 
 [![CleanBuild_App](images\CleanAndBuildApp.png)](images\CleanAndBuildApp.png)
 
-4. Build the Application Image File using **pyfwimagebuilder**
+4. Build the Application Image File using **pyfwimagebuilder**.
 
 *Hint: The configuration TOML file is generated by the MDFU Client project*
 
@@ -290,3 +292,12 @@ Right click, then select Clean and Build
 ## Summary
 
 This repository demonstrates how to configure the 8-Bit MDFU Client library in MCC to enable device firmware updates over UART on a AVR128DA48 Curiosity Nano.
+
+## Contents
+- [Back to Related Documentation](#related-documentation)
+- [Back to Software Used](#software-used)
+- [Back to Hardware Used](#hardware-used)
+- [Back to Setup](#setup)
+- [Back to Operation](#operation)
+- [Back to Summary](#summary)
+- [Back to Top](#getting-started-with-the-8-bit-mdfu-client-for-avr128da48-using-mplab®-x)
