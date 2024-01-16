@@ -294,6 +294,7 @@ Right click, then select Clean and Build
 This repository demonstrates how to configure the 8-Bit MDFU Client library in MCC to enable device firmware updates over UART on a AVR128DA48 Curiosity Nano.
 
 ## Contents
+
 - [Back to Related Documentation](#related-documentation)
 - [Back to Software Used](#software-used)
 - [Back to Hardware Used](#hardware-used)
