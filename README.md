@@ -37,20 +37,20 @@ This example will demonstrate:
 
 - AVR128DA48 Curiosity Nano [(DM164151)](https://www.microchip.com/en-us/development-tool/DM164151)
 
-[![AVR128DA48_CNano](images\230928-mcu8-photo-dm164151-front-transparent.PNG)](images\230928-mcu8-photo-dm164151-front-transparent.PNG)
+[![AVR128DA48_CNano](images/230928-mcu8-photo-dm164151-front-transparent.PNG)](images/230928-mcu8-photo-dm164151-front-transparent.PNG)
 
 ## Setup
 
 The following project setup is the same for all the example project pairs. If something goes wrong while running these examples, confirm that the settings in the projects are consistent with the options seen in this section.
 
 ### Client Setup
-[![mdfu-builder](images\ProjectConfigurationOverview.PNG)](images\ProjectConfigurationOverview.PNG)
+[![mdfu-builder](images/ProjectConfigurationOverview.PNG)](images/ProjectConfigurationOverview.PNG)
 
 **Clock Control**
 - Prescaler enable: Disabled
 - Internal Oscillator Frequency: 20_MHz
 
-[![CLK](images\ClockSetup.PNG)](images\ClockSetup.PNG)
+[![CLK](images/ClockSetup.PNG)](images/ClockSetup.PNG)
 
 **Configuration Bits**
 
@@ -60,14 +60,14 @@ For example, if the Program Flash Memory size is 0x20000, then the BOOT FUSE for
 For AVR128DA48,
 - BOOTSIZE: 254
 
-[![CFG](images\ConfigBitsSetup.PNG)](images\ConfigBitsSetup.PNG)
+[![CFG](images/ConfigBitsSetup.PNG)](images/ConfigBitsSetup.PNG)
 
 **NVM**
 - Generate Flash APIs: Enabled
 - Generate EEPROM APIs: Enabled
 - Generate Signature Row APIs: Enabled
 
-[![NVM](images\NVMSetup.PNG)](images\NVMSetup.PNG)
+[![NVM](images/NVMSetup.PNG)](images/NVMSetup.PNG)
 
 **UART**
 - Custom Name: UART2
@@ -81,19 +81,19 @@ For AVR128DA48,
 - Redirect Printf to UART: Disabled
 - Interrupt Driven: Disabled
 
-[![UART](images\UARTDriverSetup.PNG)](images\UARTDriverSetup.PNG)
+[![UART](images/UARTDriverSetup.PNG)](images/UARTDriverSetup.PNG)
 
 **USART PLIB**
 - Enable UART Receiver: Enabled
 - Enable UART transmitter: Enabled
 
-[![UART_PLIB](images\UARTPLIBSetup.PNG)](images\UARTPLIBSetup.PNG)
+[![UART_PLIB](images/UARTPLIBSetup.PNG)](images/UARTPLIBSetup.PNG)
 
 **UART Pins**
 - UART TX: RB5
 - UART RX: RB4
 
-[![UART_Pins](images\UARTPortsSetup.PNG)](images\UARTPortsSetup.PNG)
+[![UART_Pins](images/UARTPortsSetup.PNG)](images/UARTPortsSetup.PNG)
 
 **8-Bit MDFU Client**
 - Communication Protocol: UART
@@ -106,18 +106,18 @@ For AVR128DA48,
 
 *Example for Checksum Verification*
 
-[![MDFU](images\MDFUClientSetup.PNG)](images\MDFUClientSetup.PNG)
+[![MDFU](images/MDFUClientSetup.PNG)](images/MDFUClientSetup.PNG)
 
 **8-Bit MDFU Client I/O**
 - BOOT INDICATE: RC6
 - BOOT ENTRY: RC7
 
-[![IO-Pins](images\IOPortSetup.PNG)](images\IOPortSetup.PNG)
+[![IO-Pins](images/IOPortSetup.PNG)](images/IOPortSetup.PNG)
 
 - BOOT INDICATE: Start High
 - BOOT ENTRY: Weak Pullup
 
-[![IO-Settings](images\IOPinsSetup.PNG)](images\IOPinsSetup.PNG)
+[![IO-Settings](images/IOPinsSetup.PNG)](images/IOPinsSetup.PNG)
 
 **8-Bit MDFU Client Project Properties**
 
@@ -136,19 +136,19 @@ XC8 Linker>Additional options>Extra Linker Options>-Wl,--defsym,__TEXT_REGION_LE
 
 This value will be the same as it appeared in the MDFU Client UI.
 
-[![IO-Settings](images\LinkerSettings.PNG)](images\LinkerSettings.PNG)
+[![IO-Settings](images/LinkerSettings.PNG)](images/LinkerSettings.PNG)
 
 ---
 ### Application Setup
-[![app-builder](images\AppConfigurationOverview.PNG)](images\AppConfigurationOverview.PNG)
+[![app-builder](images/AppConfigurationOverview.PNG)](images/AppConfigurationOverview.PNG)
 
 **I/O Pins**
 - GPIO Output: RC6
 
-[![app_io](images\AppPortSetup.PNG)](images\AppPortSetup.PNG)
+[![app_io](images/AppPortSetup.PNG)](images/AppPortSetup.PNG)
 - Custom Name: LED
 
-[![app_io_settings](images\LEDSetup.PNG)](images\LEDSetup.PNG)
+[![app_io_settings](images/LEDSetup.PNG)](images/LEDSetup.PNG)
 
 **Project Properties**
 
@@ -169,12 +169,12 @@ This step is different depending on the compiler you are using.
  * If you are using the XC8 compiler, open up project properties and apply the below settings
     - Linker>Additional Options>Extra Linker Options=-Ttext=<Boot End Address> -Wl,-u,applicationFooter
 
-     [![app_io_settings](images\appLinkerSettings.PNG)](images\appLinkerSettings.PNG) 
+     [![app_io_settings](images/appLinkerSettings.PNG)](images/appLinkerSettings.PNG) 
       
       This value will be the same as it appeared in the bootloader UI.
     - Compiler>Preprocessing and Messages. Check the **Use CCI Syntax** checkbox
  
-     [![app_io_settings](images\appCompilerSettings.PNG)](images\appCompilerSettings.PNG)
+     [![app_io_settings](images/appCompilerSettings.PNG)](images/appCompilerSettings.PNG)
 
 *End Application*
  * Open main.c and add logic inside while loop to toggle the onboard LED with a 200 ms rate:
@@ -238,40 +238,40 @@ In this section, we will walkthrough how to run the examples in this repository.
 
 1. Open the MDFU Client Project.
 
-[![OpenMDFUProject](images\openProjectMDFU.PNG)](images\openProjectMDFU.PNG)
+[![OpenMDFUProject](images/openProjectMDFU.PNG)](images/openProjectMDFU.PNG)
 
 2. Set MDFU Client Project as Main Project.
 
-[![OpenMDFUProject](images\setAsMainProject.png)](images\setAsMainProject.png)
+[![OpenMDFUProject](images/setAsMainProject.png)](images/setAsMainProject.png)
 
 3. Right click, then select Clean and Build.
 
-[![CleanBuild](images\CleanAndBuildMDFU.png)](images\CleanAndBuildMDFU.png)
+[![CleanBuild](images/CleanAndBuildMDFU.png)](images/CleanAndBuildMDFU.png)
 
 4. Program the MDFU Client Project.
 
-[![ProgramMDFU](images\ProgramMDFU.png)](images\ProgramMDFU.png)
+[![ProgramMDFU](images/ProgramMDFU.png)](images/ProgramMDFU.png)
 
 **Bootloader Operation after initial programming**
 
 After the initial programming, the LED must be on.
 
-[![MDFU_BootMode](images\AVR128DA48_BootMode.png)](images\AVR128DA48_BootMode.png)
+[![MDFU_BootMode](images/AVR128DA48_BootMode.png)](images/AVR128DA48_BootMode.png)
 
 **Application Operation**
 1. Open the Application Project that is configured for your selected verification scheme.
 
-[![OpenAppProject](images\openProjectApp.PNG)](images\openProjectApp.PNG)
+[![OpenAppProject](images/openProjectApp.PNG)](images/openProjectApp.PNG)
 
 2. Set the application project as the Main Project.
 
-[![MainAppProject](images\setAppAsMainProject.png)](images\setAppAsMainProject.png)
+[![MainAppProject](images/setAppAsMainProject.png)](images/setAppAsMainProject.png)
 
 3. Build the required Application project.
 
 Right click, then select Clean and Build
 
-[![CleanBuild_App](images\CleanAndBuildApp.png)](images\CleanAndBuildApp.png)
+[![CleanBuild_App](images/CleanAndBuildApp.png)](images/CleanAndBuildApp.png)
 
 4. Build the Application Image File using **pyfwimagebuilder**.
 
@@ -281,7 +281,7 @@ Right click, then select Clean and Build
 
 `pyfwimagebuilder build -i "application_hex_file.hex"  -c "mdfu_config_file.toml" -o output.img`
 
-[![build_img](images\BuildTheImage.png)](images\BuildTheImage.png)
+[![build_img](images/BuildTheImage.png)](images/BuildTheImage.png)
 
 5. Use the **pymdfu** host tool to transfer the application image file to the bootloader.
 
@@ -291,11 +291,11 @@ Right click, then select Clean and Build
 
 `pymdfu update serial ./output.img --baudrate 9600 --port COM##`
 
-[![transfer_img](images\SendTheImage.PNG)](images\SendTheImage.PNG)
+[![transfer_img](images/SendTheImage.PNG)](images/SendTheImage.PNG)
 
 **Application Has Been Updated Successfully**
 
-[![MDFU_AppMode](images\AVR128DA48_AppMode.gif)](images\AVR128DA48_AppMode.gif)
+[![MDFU_AppMode](images/AVR128DA48_AppMode.gif)](images/AVR128DA48_AppMode.gif)
 
 ## Summary
 
