@@ -122,16 +122,16 @@ For AVR128DA48,
 **8-Bit MDFU Client Project Properties**
 
 Set the linker options to restrict the bootloader compilation to the BOOT partition.
-This step is different depending on the compiler you are using.
+This step is different depending on the used compiler.
 
 AVR-GCC:
 
-If you are using the AVR-GCC compiler, open up project properties and apply the below settings
+When using the AVR-GCC compiler, open the project properties and apply the below settings
 avr-ld>Additional options>-Wl,--defsym,__TEXT_REGION_LENGTH__= Application Start Address
 
 XC8:
 
-If you are using the XC8 compiler, open up project properties and apply the below settings
+When using the XC8 compiler, open the project properties and apply the below settings
 XC8 Linker>Additional options>Extra Linker Options>-Wl,--defsym,__TEXT_REGION_LENGTH__= Application Start Address
 
 This value will be the same as it appeared in the MDFU Client UI.
@@ -155,10 +155,10 @@ This value will be the same as it appeared in the MDFU Client UI.
 Linker Additional Options
 *Linker Setting*
 
-This step is different depending on the compiler you are using.
+This step is different depending on the used compiler.
 
 *AVR-GCC*
- * If you are using the AVR-GCC compiler, open up project properties and apply the below settings
+ * When using the AVR-GCC compiler, open the project properties and apply the below settings
 
     - avr-ld>Memory Settings>FLASH segment>{*}.text=<{*}{*}Application Start Address_{*}{*}in_words>{*}
     - avr-ld>Additional Options=-Wl,-u,applicationFooter
@@ -166,7 +166,7 @@ This step is different depending on the compiler you are using.
  Note: AVR-gcc accepts word addresses, so if it is set 0x4000 in the bootloader, it must be set to 0x2000 here.
 
 *XC8*
- * If you are using the XC8 compiler, open up project properties and apply the below settings
+ * When using the XC8 compiler, open the project properties and apply the below settings
     - Linker>Additional Options>Extra Linker Options=-Ttext=<Boot End Address> -Wl,-u,applicationFooter
 
      [![app_io_settings](images/appLinkerSettings.PNG)](images/appLinkerSettings.PNG) 
@@ -189,7 +189,7 @@ while(1)
  * Include the delay.h header file
  * At the top of the main file before the main function, copy and paste the following code:
 
- ** Hint: The address presented below in the __at() is PROGMEM_SIZE - 2 since the hash size we are using is two bytes.
+ **  Tip: The address presented below in the __at() is PROGMEM_SIZE - 2 since the hash size used is two bytes.
 ```
 #include <stdint.h>
 #ifdef __XC8__
@@ -210,7 +210,7 @@ applicationFooter __attribute__((used, section("application_footer"))) = 0xFFFF;
     New>Other...> Other>Empty File
    - Enter the name postBuild for File Name and add your required extension (.bat or .sh).
    - Click Finish
-   -  You should have a new file either named "postBuild.bat" or "postBuild.sh"
+   - A new file named "postBuild.bat" or "postBuild.sh" will be displayed.
    - Copy the following lines into the script file:
         To Fill Unused Space: 
 
@@ -219,7 +219,7 @@ applicationFooter __attribute__((used, section("application_footer"))) = 0xFFFF;
         To perform the calculation and store the result: 
         
         ```hexmate %1 -O%1 +-CK=10000-1FFFD@1FFFEg2w-2```
-   - Add the path to MPLAB X which contains hexmate application to your environment variable **PATH**.
+   - Add the path to MPLAB X which contains hexmate application to the environment variable **PATH**.
 
     Example path(default):
         ```C:\Program Files\Microchip\MPLABX\v6.15\mplab_platform\bin``` 
@@ -232,7 +232,7 @@ applicationFooter __attribute__((used, section("application_footer"))) = 0xFFFF;
         Example path: ```.\postBuild.bat avr128da48-application-crc32.X.production.hex```
 
 ## Operation
-In this section, we will walkthrough how to run the examples in this repository. This example shows how to execute the Checksum verification example and update the device flash memory with the Checksum application image to demonstrate a successful device firmware update (DFU).
+This section is a walkthrough on how to run the examples in this repository. This example shows how to execute the Checksum verification example and update the device flash memory with the Checksum application image to demonstrate a successful device firmware update (DFU).
 
 **8-Bit MDFU Client Operation**
 
@@ -259,7 +259,7 @@ After the initial programming, the LED must be on.
 [![MDFU_BootMode](images/AVR128DA48_BootMode.png)](images/AVR128DA48_BootMode.png)
 
 **Application Operation**
-1. Open the Application Project that is configured for your selected verification scheme.
+1. Open the Application Project that is configured for the selected verification scheme.
 
 [![OpenAppProject](images/openProjectApp.PNG)](images/openProjectApp.PNG)
 
@@ -275,7 +275,7 @@ Right click, then select Clean and Build
 
 4. Build the Application Image File using **pyfwimagebuilder**.
 
-*Hint: The configuration TOML file is generated by the MDFU Client project*
+*Tip: The configuration TOML file is generated by the MDFU Client project*
 
 **Example Command:**
 
@@ -285,7 +285,7 @@ Right click, then select Clean and Build
 
 5. Use the **pymdfu** host tool to transfer the application image file to the bootloader.
 
-*Hint: You can find the COM port of the MCU using the MPLAB Data Visualizer.*
+*Tip: The COM port of the MCU is found using the MPLAB Data Visualizer.*
 
 **Example Command:**
 
