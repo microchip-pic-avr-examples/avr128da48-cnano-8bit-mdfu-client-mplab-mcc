@@ -43,6 +43,8 @@ This example will demonstrate:
 
 The following project setup is the same for all the example project pairs. If something goes wrong while running these examples, confirm that the settings in the projects are consistent with the options seen in this section.
 
+ Note: The values mentioned below are relevant for AVR128DA48, and in case of any other device, these values need to be updated according to the device specifications.
+
 ### Client Setup
 [![mdfu-builder](images/ProjectConfigurationOverview.PNG)](images/ProjectConfigurationOverview.PNG)
 
@@ -213,13 +215,34 @@ applicationFooter __attribute__((used, section("application_footer"))) = 0xFFFF;
    - A new file named "postBuild.bat" or "postBuild.sh" will be displayed.
    - Copy the following lines into the script file:
         To Fill Unused Space: 
-
-        ```hexmate r0-FFFFFFFF,%1 -O%1 -FILL=w1:0xFF@0x10000:0x1FFFF```
+       
+        ```hexmate r0-FFFFFFFF,%1 -O%1 -FILL=w1:0xFF@0x1400:0x1FFFF```
+        0x1400 corresponds to the application start address and 0x1FFFF to Flash End Address(Flash size -1).
         
         To perform the calculation and store the result: 
+        Reset Vector and Status Byte do not require this line.
+
+        Checksum:
         
-        ```hexmate %1 -O%1 +-CK=10000-1FFFD@1FFFEg2w-2```
+        ```hexmate %1 -O%1 +-CK=1400-1FFFD@1FFFEg2w-2```
+        0x1400 corresponds to the application start address and 0x1FFFE is to Flash size - 2, since checksum requires 2 bytes.
+        This command is taking range from 0x1400-@1FFFD of the application, calculating its checksum and storing it at 0x1FFFE using algorithm checksum.
+        
+        CRC16:
+        
+        ```hexmate %1 -O%1 +-CK=1400-1FFFD@1FFFE+FFFFg5w-2p1021``` where
+        0x1400 corresponds to the application start address and 0x1FFFE is to Flash size - 2, since CRC16 hash requires 2 bytes.
+        This command is taking range from 0x1400-@1FFFD of the application, calculating CRC16 hash on the data and storing it at 0x1FFFE using algorithm CRC16.
+
+        CRC32:
+        
+        ```hexmate %1 -O%1 +-CK=1400-1FFFB@1FFFC+FFFFFFFFg-5w-4p04C11DB7``` where
+        0x1400 corresponds to the application start address and 0x1FFFC is to Flash size - 4, since CRC32 hash requires 4 bytes.
+        This command is taking range from 0x1400-@1FFFB of the application, calculating CRC16 hash on the data and storing it at 0x1FFFC using algorithm CRC32.
+
    - Add the path to MPLAB X which contains hexmate application to the environment variable **PATH**.
+
+ Note: More information on hexmate can be found in the hexmate user guide packaged with the compiler docs. It can be found in the docs folder for compiler version under use. 
 
     Example path(default):
         ```C:\Program Files\Microchip\MPLABX\v6.15\mplab_platform\bin``` 
