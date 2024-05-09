@@ -50,7 +50,7 @@ The following project setup is the same for all the example project pairs. If so
 
 **Clock Control**
 - Prescaler enable: Disabled
-- Internal Oscillator Frequency: 20_MHz
+- Internal Oscillator Frequency: 8_MHz or higher
 
 [![CLK](images/ClockSetup.PNG)](images/ClockSetup.PNG)
 
@@ -61,6 +61,11 @@ For example, if the Program Flash Memory size is 0x20000, then the BOOT FUSE for
 
 For AVR128DA48,
 - BOOTSIZE: 254
+
+The value needs to be set to 254 only initially, to know the FLASH memory consumed by the bootloader. Upon configuring and building bootloader for the first time, this size can be reduced according to the memory consumed by bootloader. This value can then be configured to set application address as the next valid page start address after the amount of memory consumed by bootloader.
+
+For example,
+If number of bytes consumed by bootloader are 0x1367h then setting BOOTSIZE to 10 will configure application start address to 0x1400h, allowing the bootloader Flash space to be enough to successfully store the bootloader code.
 
 [![CFG](images/ConfigBitsSetup.PNG)](images/ConfigBitsSetup.PNG)
 
@@ -106,11 +111,15 @@ For AVR128DA48,
 - I/O Pin Entry: Enabled
 - Memory Verification: Assigned Based on Example Project Naming Convention
 
-*Example for Checksum Verification*
+**Tip: Easiest way to get correct device ID is to connect your device and use the "Refresh Debug Tool Status" button in the Dashboard left panel on MPLAB X IDE. Upon clicking on the button and selecting correct PKOB Nano, it prints out the device ID with other information in the output window.**
 
-[![MDFU](images/MDFUClientSetup.PNG)](images/MDFUClientSetup.PNG)
+[![Refresh Debug Tool Status](images/RefreshDebugToolStatus.PNG)](images/RefreshDebugToolStatus.PNG)
 
 **8-Bit MDFU Client I/O**
+Upon adding the MDFU Client Library, these pins will be automatically loaded in the PIN configuration section.
+
+These pins must configured as follows:
+
 - BOOT INDICATE: RC6
 - BOOT ENTRY: RC7
 
@@ -121,6 +130,30 @@ For AVR128DA48,
 
 [![IO-Settings](images/IOPinsSetup.PNG)](images/IOPinsSetup.PNG)
 
+*Example for Checksum Verification*
+
+**Updating APPLICATION START ADDRESS**
+
+This is an important step to ensure that the bootloader and application FLASH sections are configured to provide maximum space for application while decreasing the bootloader section to be as close to the memory consumed by the bootloader code.
+
+- At this point, as mentioned in the configuration bits section of [Client Setup](#client-setup), the BOOTFUSE configuration bit is configured to 254 which results in application start address to be configured as 
+[![Max Boot Size](images/MaxBootSize.PNG)](images/MaxBootSize.PNG)
+
+- After this, upon generating and performing clean and build, the bytes of memory consumed by bootloader can be observed in dashboard window.
+
+[![Build Memory Consumption](images/BuildMemoryConsumption.PNG)](images/BuildMemoryConsumption.PNG)
+
+- Next step is to update the BOOTSIZE fuse such that the application start address will be the next page start address in FLASH after the memory consumed by bootloader code. More information on BOOTSIZE and CODESIZE Fuses can be found in the [AVR128DA48 datasheet](https://www.microchip.com/en-us/product/AVR128DA48) in the NVMCTRL -> Functional Description -> Memory Organization section.
+
+- Since in this example, code consumes 0x13A0, the application start address needs to be configured to 0x1400. This is achieved by setting the BOOTSIZE to 10.
+
+[![Updated Boot Size](images/UpdatedBootSize.PNG)](images/UpdatedBootSize.PNG)
+
+- After updating the application start address, final configurations must be as mentioned below 
+
+[![MDFU](images/MDFUClientSetup.PNG)](images/MDFUClientSetup.PNG)
+
+
 **8-Bit MDFU Client Project Properties**
 
 Set the linker options to restrict the bootloader compilation to the BOOT partition.
@@ -129,19 +162,22 @@ This step is different depending on the used compiler.
 AVR-GCC:
 
 When using the AVR-GCC compiler, open the project properties and apply the below settings
-avr-ld>Additional options>-Wl,--defsym,__TEXT_REGION_LENGTH__= Application Start Address
+avr-ld>Additional options>-Wl,--defsym,\_\_TEXT_REGION_LENGTH\_\_=<Application Start Address>
 
 XC8:
 
 When using the XC8 compiler, open the project properties and apply the below settings
-XC8 Linker>Additional options>Extra Linker Options>-Wl,--defsym,__TEXT_REGION_LENGTH__= Application Start Address
+XC8 Linker>Additional options>Extra Linker Options>-Wl,--defsym,\_\_TEXT_REGION_LENGTH\_\_=<Application Start Address>
 
-This value will be the same as it appeared in the MDFU Client UI.
+Replace the <Application Start Address> to the Application Start Address value as configured in the MDFU Client UI.
 
 [![IO-Settings](images/LinkerSettings.PNG)](images/LinkerSettings.PNG)
 
 ---
 ### Application Setup
+
+DELAY driver needs to be added for the application project.
+
 [![app-builder](images/AppConfigurationOverview.PNG)](images/AppConfigurationOverview.PNG)
 
 **I/O Pins**
@@ -171,9 +207,10 @@ This step is different depending on the used compiler.
  * When using the XC8 compiler, open the project properties and apply the below settings
     - Linker>Additional Options>Extra Linker Options=-Ttext=<Boot End Address> -Wl,-u,applicationFooter
 
+    Boot end Address is same as teh application start address as configured on MDFU Client UI.
+
      [![app_io_settings](images/appLinkerSettings.PNG)](images/appLinkerSettings.PNG) 
       
-      This value will be the same as it appeared in the bootloader UI.
     - Compiler>Preprocessing and Messages. Check the **Use CCI Syntax** checkbox
  
      [![app_io_settings](images/appCompilerSettings.PNG)](images/appCompilerSettings.PNG)
@@ -191,7 +228,7 @@ while(1)
  * Include the delay.h header file
  * At the top of the main file before the main function, copy and paste the following code:
 
- **  Tip: The address presented below in the __at() is PROGMEM_SIZE - 2 since the hash size used is two bytes.
+ **Tip: The address presented below in the __at() is PROGMEM_SIZE - 2 since the hash size used is two bytes. In case of CRC32, the 0xFFFF at the end will be 0xFFFFFFFF, since CRC32 requires 4 bytes instead of 2.**
 ```
 #include <stdint.h>
 #ifdef __XC8__
@@ -250,9 +287,11 @@ applicationFooter __attribute__((used, section("application_footer"))) = 0xFFFF;
  * Compile the project
  * Running the postBuild script
 
-        Copy and paste the following command in command prompt: **postBuild${ShExtension} ${ImagePath}**
-
-        Example path: ```.\postBuild.bat avr128da48-application-crc32.X.production.hex```
+   Open an command prompt and run the following command in command prompt with appropriate parameters.
+   - Command Format: **postBuild${ShExtension} ${ImagePath}**
+   - Example path: ```.\postBuild.bat avr128da48-application-crc32.X.production.hex```
+      
+      
 
 ## Operation
 This section is a walkthrough on how to run the examples in this repository. This example shows how to execute the Checksum verification example and update the device flash memory with the Checksum application image to demonstrate a successful device firmware update (DFU).
@@ -298,11 +337,13 @@ Right click, then select Clean and Build
 
 4. Build the Application Image File using **pyfwimagebuilder**.
 
-*Tip: The configuration TOML file is generated by the MDFU Client project*
+*Tip: The configuration TOML file is generated by the MDFU Client project under \mcc_generated_files\bootloader\configurations*
+
+[![toml_PATH](images/toml_PATH.PNG)](images/toml_PATH.PNG)
 
 **Example Command:**
 
-`pyfwimagebuilder build -i "application_hex_file.hex"  -c "mdfu_config_file.toml" -o output.img`
+`pyfwimagebuilder build -i "application_hex_file.hex"  -c "bootloader_configuration.toml" -o output.img`
 
 [![build_img](images/BuildTheImage.png)](images/BuildTheImage.png)
 
