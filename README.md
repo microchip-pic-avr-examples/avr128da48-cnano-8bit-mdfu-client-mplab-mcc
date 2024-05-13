@@ -2,7 +2,7 @@
 
 [![MCHP](images/microchip.png)](https://www.microchip.com)
 
-# Getting Started With the 8-bit MDFU Client for AVR128DA48 Using MPLAB X &reg;
+# Getting Started With the 8-bit MDFU Client for AVR128DA48 Using MPLAB&reg; X
 
 This is an example on how to use the MPLAB Code Configurator (MCC) generated code for configuring several basic Microchip Device Firmware Update (MDFU) bootloader solutions for the AVR128DA48 Curiosity Nano Evaluation board.
 
@@ -28,7 +28,7 @@ This example will demonstrate:
 - [MPLAB X IDE 6.15.0](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
 - [MPLAB XC8 2.45.0](https://www.microchip.com/en-us/tools-resources/develop/mplab-xc-compilers)
 - [MPLAB Code Configurator (MCC) 5.4.1](https://www.microchip.com/mplab/mplab-code-configurator)
-- [MPLAB Code Configurator (MCC) Device Libraries AVR &reg; AND ATtiny &reg; MCUs](https://www.microchip.com/mplab/mplab-code-configurator)
+- [MPLAB Code Configurator (MCC) Device Libraries AVR&reg; AND ATtiny&reg; MCUs](https://www.microchip.com/mplab/mplab-code-configurator)
 - [Python 3.8 or later](https://www.python.org/downloads/)
 - [pyfwimagebuilder v1.0.1.14](https://pypi.org/project/pyfwimagebuilder/)
 - [pymdfu v1.0.1.5](https://pypi.org/project/pymdfu/)
@@ -92,7 +92,7 @@ If number of bytes consumed by bootloader are 0x1367h then setting BOOTSIZE to 1
 
 **USART PLIB**
 - Enable UART Receiver: Enabled
-- Enable UART transmitter: Enabled
+- Enable UART Transmitter: Enabled
 
 [![UART_PLIB](images/UARTPLIBSetup.PNG)](images/UARTPLIBSetup.PNG)
 
@@ -113,9 +113,10 @@ If number of bytes consumed by bootloader are 0x1367h then setting BOOTSIZE to 1
 
 **Tip**: Easiest way to get correct device ID is to connect your device and use the "Refresh Debug Tool Status" button in the Dashboard left panel on MPLAB X IDE. Upon clicking on the button and selecting correct PKOB Nano, it prints out the device ID with other information in the output window.
 
-[![Refresh Debug Tool Status](images/RefreshDebugToolStatus.PNG)](images/RefreshDebugToolStatus.PNG)
+[![Refresh Debug Tool Status](images/RefreshDebugToolStatus.png)](images/RefreshDebugToolStatus.png)
 
 **8-Bit MDFU Client I/O**
+
 Upon adding the MDFU Client Library, these pins will be automatically loaded in the PIN configuration section.
 
 These pins must configured as follows:
@@ -132,22 +133,22 @@ These pins must configured as follows:
 
 *Example for Checksum Verification*
 
-**Updating APPLICATION START ADDRESS**
+**Updating Application Start Address**
 
-This is an important step to ensure that the bootloader and application FLASH sections are configured to provide maximum space for application while decreasing the bootloader section to be as close to the memory consumed by the bootloader code.
+This is an important step to ensure that the bootloader and application FLASH sections are configured to provide maximum space for the application while decreasing the bootloader section to be as close to the memory consumed by the bootloader code as possible.
 
 - At this point, as mentioned in the configuration bits section of [Client Setup](#client-setup), the BOOTFUSE configuration bit is configured to 254 which results in application start address to be configured as 
-[![Max Boot Size](images/MaxBootSize.PNG)](images/MaxBootSize.PNG)
+[![Max Boot Size](images/MaxBootSize.png)](images/MaxBootSize.png)
 
 - After this, upon generating and performing clean and build, the bytes of memory consumed by bootloader can be observed in dashboard window.
 
-[![Build Memory Consumption](images/BuildMemoryConsumption.PNG)](images/BuildMemoryConsumption.PNG)
+[![Build Memory Consumption](images/BuildMemoryConsumption.png)](images/BuildMemoryConsumption.png)
 
-- Next step is to update the BOOTSIZE fuse such that the application start address will be the next page start address in FLASH after the memory consumed by bootloader code. More information on BOOTSIZE and CODESIZE Fuses can be found in the [AVR128DA48 datasheet](https://www.microchip.com/en-us/product/AVR128DA48) in the NVMCTRL -> Functional Description -> Memory Organization section.
+- Next step is to update the BOOTSIZE fuse such that the application start address will be the next page start address in FLASH after the memory consumed by bootloader code. More information on BOOTSIZE and CODESIZE fuses can be found in the [AVR128DA48 datasheet](https://www.microchip.com/en-us/product/AVR128DA48) in the *NVMCTRL -> Functional Description -> Memory Organization section.*
 
 - Since in this example, code consumes 0x13A0, the application start address needs to be configured to 0x1400. This is achieved by setting the BOOTSIZE to 10.
 
-[![Updated Boot Size](images/UpdatedBootSize.PNG)](images/UpdatedBootSize.PNG)
+[![Updated Boot Size](images/UpdatedBootSize.png)](images/UpdatedBootSize.png)
 
 - After updating the application start address, final configurations must be as mentioned below 
 
@@ -193,7 +194,8 @@ DELAY driver needs to be added for the application project.
 **Project Properties**
 
 Linker Additional Options
-*Linker Setting*
+
+*Linker Settings*
 
 This step is different depending on the used compiler.
 
@@ -203,7 +205,7 @@ This step is different depending on the used compiler.
     - avr-ld>Memory Settings>FLASH segment> .text=<Application_Start_Address_in_words>
     - avr-ld>Additional Options=-Wl,-u,applicationFooter
    ```
- **Note**: AVR-gcc accepts word addresses, so if it is set 0x4000 in the bootloader, it must be set to 0x2000 here.
+ **Note**: AVR-GCC accepts word addresses, so if it is set 0x4000 in the bootloader, it must be set to 0x2000 here.
 
 *XC8*
  * When using the XC8 compiler, open the project properties and apply the below settings
@@ -230,7 +232,7 @@ while(1)
  * Include the <code style="font-family: 'Courier New', Courier, monospace;">delay.h</code> header file
  * At the top of the main file before the main function, copy and paste the following code:
 
- **Tip**: The address presented below in the __at() is PROGMEM_SIZE - 2 since the hash size used is two bytes. In case of CRC32, the 0xFFFF at the end will be 0xFFFFFFFF, since CRC32 requires 4 bytes instead of 2.
+ **Tip**: The address presented below in the __at() is PROGMEM_SIZE - 2 since the hash size used is two bytes. In case of CRC32, the 0xFFFF at the end will be 0xFFFFFFFF, since CRC32 requires four bytes instead of two.
 ```
 #include <stdint.h>
 #ifdef __XC8__
@@ -340,7 +342,7 @@ Right click, then select Clean and Build
 
 **Tip**: The configuration TOML file is generated by the MDFU Client project under *\mcc_generated_files\bootloader\configurations*
 
-[![toml_PATH](images/toml_PATH.PNG)](images/toml_PATH.PNG)
+[![toml_PATH](images/toml_PATH.png)](images/toml_PATH.png)
 
 **Example Command:**
 
