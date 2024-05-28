@@ -24,6 +24,7 @@
               <itemPath>mcc_generated_files/bootloader/library/core/bl_memory.h</itemPath>
               <itemPath>mcc_generated_files/bootloader/library/core/bl_core.h</itemPath>
               <itemPath>mcc_generated_files/bootloader/library/core/bl_app_verify.h</itemPath>
+              <itemPath>mcc_generated_files/bootloader/library/core/device_macros.h</itemPath>
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
@@ -417,6 +418,7 @@
       </makeCustomizationType>
       <HI-TECH-COMP>
         <property key="additional-warnings" value="true"/>
+        <property key="appendMe" value=""/>
         <property key="asmlist" value="true"/>
         <property key="call-prologues" value="false"/>
         <property key="default-bitfield-type" value="true"/>
@@ -437,7 +439,7 @@
         <property key="optimization-debug" value="false"/>
         <property key="optimization-invariant-enable" value="false"/>
         <property key="optimization-invariant-value" value="16"/>
-        <property key="optimization-level" value="-Os"/>
+        <property key="optimization-level" value="-O2"/>
         <property key="optimization-speed" value="false"/>
         <property key="optimization-stable-enable" value="false"/>
         <property key="preprocess-assembler" value="true"/>
