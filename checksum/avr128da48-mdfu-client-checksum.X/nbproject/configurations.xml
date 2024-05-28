@@ -24,6 +24,7 @@
               <itemPath>mcc_generated_files/bootloader/library/core/bl_memory.h</itemPath>
               <itemPath>mcc_generated_files/bootloader/library/core/bl_core.h</itemPath>
               <itemPath>mcc_generated_files/bootloader/library/core/bl_app_verify.h</itemPath>
+              <itemPath>mcc_generated_files/bootloader/library/core/device_macros.h</itemPath>
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
@@ -352,6 +353,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/GitHubExamples/avr128da48-cnano-8bit-mdfu-client-mplab-mcc/checksum/avr128da48-mdfu-client-checksum.X/debug/free/avr128da48-mdfu-client-checksum_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
@@ -594,6 +597,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/GitHubExamples/avr128da48-cnano-8bit-mdfu-client-mplab-mcc/checksum/avr128da48-mdfu-client-checksum.X/debug/pro/avr128da48-mdfu-client-checksum_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
