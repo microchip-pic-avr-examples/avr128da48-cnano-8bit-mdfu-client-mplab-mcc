@@ -96,27 +96,6 @@ static void USART1_DefaultParityErrorCallback(void);
   Section: USART1  APIs
 */
 
-#if defined(__GNUC__)
-
-int USART1_printCHAR(char character, FILE *stream)
-{
-    while(!(USART1_IsTxReady()));
-    USART1_Write(character);
-    return 0;
-}
-
-FILE USART1_stream = FDEV_SETUP_STREAM(USART1_printCHAR, NULL, _FDEV_SETUP_WRITE);
-
-#elif defined(__ICCAVR__)
-
-int putchar (int outChar)
-{
-    while(!(USART1_IsTxReady()));
-    USART1_Write(outChar);
-    return outChar;
-}
-#endif
-
 void USART1_Initialize(void)
 {
     // Set the USART1 module to the options selected in the user interface.
@@ -149,9 +128,6 @@ void USART1_Initialize(void)
     USART1_OverrunErrorCallbackRegister(USART1_DefaultOverrunErrorCallback);
     USART1_ParityErrorCallbackRegister(USART1_DefaultParityErrorCallback);
     usart1RxLastError.status = 0;  
-#if defined(__GNUC__)
-    stdout = &USART1_stream;
-#endif
 }
 
 void USART1_Deinitialize(void)
