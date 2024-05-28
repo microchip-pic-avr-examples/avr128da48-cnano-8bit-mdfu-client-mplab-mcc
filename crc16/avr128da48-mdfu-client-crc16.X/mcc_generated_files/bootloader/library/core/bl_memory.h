@@ -1,5 +1,5 @@
 /**
- * © 2023 Microchip Technology Inc. and its subsidiaries.
+ * © 2024 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip
  * software and any derivatives exclusively with Microchip products.
@@ -23,7 +23,7 @@
  *
  *  @file    bl_memory.h
  *  @defgroup bl_memory Memory Helper
- *  @brief   This file contains prototypes and data types for the helper functions used with the NVM peripheral driver
+ *  @brief   This file contains prototypes and data types for the helper functions used with the (Non-Volatile Memory) NVM peripheral driver
  *
  */
 #ifndef BL_MEMORY_H
@@ -35,8 +35,8 @@
 #include <xc.h>
 #endif
 #include "../../../nvm/nvm.h"
+#include "device_macros.h"
 #include "bl_config.h"
-
 
 /**
  * @ingroup bl_memory
@@ -57,7 +57,7 @@ typedef enum
     BL_MEM_INVALID_ARG, 
 } bl_mem_result_t;
 
-#if defined (BL_EEPROM_READ_SUPPORTED)
+#if defined (BL_EEPROM_READ_ENABLED)
 /**
  * @ingroup bl_memory
  * @brief Wrapper to the NVM Read EEPROM function which reads multiple bytes from the desired address in EEPROM.

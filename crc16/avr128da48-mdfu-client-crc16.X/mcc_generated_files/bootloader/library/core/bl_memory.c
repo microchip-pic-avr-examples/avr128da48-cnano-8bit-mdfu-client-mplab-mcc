@@ -1,5 +1,5 @@
 /**
- * © 2023 Microchip Technology Inc. and its subsidiaries.
+ * © 2024 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip
  * software and any derivatives exclusively with Microchip products.
@@ -32,12 +32,15 @@
  * write or erase bytes/words from consecutive memory locations until it's value is zero. 
  * Assigning the value to a different local variable for each API will increase redundancy.
  */
+/**@misradeviation{@advisory, 8.9} - The static buffer should not be declared at local scope
+ * due to portability concerns between various architectures.
+ */
 
 bl_mem_result_t BL_EEPROMRead(eeprom_address_t address, eeprom_data_t * buffer, size_t length)
 {
 
     bl_mem_result_t result = BL_MEM_FAIL;
-#if defined(DIAG_AVR_Dx_DEVICE)
+#if defined(DIAG_AVR_Dx_DEVICE) 
     NVM_StatusClear();
 #endif
     if (buffer == NULL) //Check the valid buffer
@@ -171,7 +174,9 @@ bl_mem_result_t BL_FlashRead(flash_address_t address, flash_data_t * buffer, siz
     return result;
 }
 
-//TODO: What was this for -> Change this
+// Static Buffer Declared to Assist in writing blocks of any length upto 1 page
+/* cppcheck-suppress misra-c2012-8.9 */
+static flash_data_t writeBuffer[PROGMEM_PAGE_SIZE];
 
 bl_mem_result_t BL_FlashWrite(flash_address_t address, flash_data_t * buffer, size_t length)
 {
@@ -180,7 +185,6 @@ bl_mem_result_t BL_FlashWrite(flash_address_t address, flash_data_t * buffer, si
     uint16_t index;
     uint16_t counter = 0;
     flash_address_t pageStartAddress;
-    flash_data_t writeBuffer[PROGMEM_PAGE_SIZE];
 
     if (buffer == NULL) //Check the valid buffer
     {
@@ -239,7 +243,10 @@ bl_mem_result_t BL_FlashWrite(flash_address_t address, flash_data_t * buffer, si
 
 
                 result = (bl_mem_result_t) FLASH_PageErase(pageStartAddress);
+                while (FLASH_IsBusy())
+                {
 
+                }
                 if ((bl_mem_result_t) NVM_OK == result)
                 {
                     //Write data to Flash row
@@ -260,6 +267,10 @@ bl_mem_result_t BL_FlashWrite(flash_address_t address, flash_data_t * buffer, si
         {
             pageStartAddress = FLASH_PageAddressGet(address);
             result = (bl_mem_result_t) FLASH_PageErase(pageStartAddress);
+            while (FLASH_IsBusy())
+                {
+
+                }
             if ((bl_mem_result_t) NVM_OK == result)
             {
                 //Write data to Flash row

@@ -128,7 +128,7 @@ nvm_status_t FLASH_PageErase(flash_address_t address)
 
 bool FLASH_IsBusy(void)
 {
-    return (NVMCTRL.STATUS & NVMCTRL_FBUSY_bm);
+        return (NVMCTRL.STATUS & NVMCTRL_FBUSY_bm);
 }
 
 flash_address_t FLASH_PageAddressGet(flash_address_t address)
