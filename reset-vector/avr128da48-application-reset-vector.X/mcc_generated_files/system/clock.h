@@ -7,7 +7,9 @@
  * 
  * @brief This file contains the API prototype for the CLKCTRL driver.
  *
- * @version CLKCTRL Driver Version 1.0.0
+ * @version CLKCTRL Driver Version 1.0.2
+ *
+ * @version Package Version 5.3.6
 */
 /*
 © [2024] Microchip Technology Inc. and its subsidiaries.
