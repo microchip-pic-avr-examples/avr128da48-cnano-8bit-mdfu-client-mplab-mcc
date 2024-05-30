@@ -26,10 +26,10 @@ This example will demonstrate:
 
 ## Software Used
 
-- [MPLAB X IDE 6.15.0](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
-- [MPLAB XC8 2.45.0](https://www.microchip.com/en-us/tools-resources/develop/mplab-xc-compilers)
-- [MPLAB Code Configurator (MCC) 5.4.1](https://www.microchip.com/mplab/mplab-code-configurator)
-- [MPLAB Code Configurator (MCC) Device Libraries AVR&reg; AND ATtiny&reg; MCUs](https://www.microchip.com/mplab/mplab-code-configurator)
+- [MPLAB X IDE 6.20.0](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
+- [MPLAB XC8 2.46.0](https://www.microchip.com/en-us/tools-resources/develop/mplab-xc-compilers)
+- [MPLAB Code Configurator (MCC) 5.5.1](https://www.microchip.com/mplab/mplab-code-configurator)
+- [MPLAB Code Configurator (MCC) Device Libraries PIC10 / PIC12 / PIC16 / PIC18 MCUs](https://www.microchip.com/en-us/tools-resources/develop/libraries/microchip-libraries-for-applications)
 - [Python 3.8 or later](https://www.python.org/downloads/)
 - [pyfwimagebuilder v1.0.1.14](https://pypi.org/project/pyfwimagebuilder/)
 - [pymdfu v1.0.1.5](https://pypi.org/project/pymdfu/)
