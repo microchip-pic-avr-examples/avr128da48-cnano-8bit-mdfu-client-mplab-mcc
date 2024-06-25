@@ -43,6 +43,7 @@
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
+      <itemPath>postBuild.bat</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -68,7 +69,6 @@
       </logicalFolder>
       <itemPath>main.c</itemPath>
     </logicalFolder>
-    <itemPath>postBuild.bat</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -108,7 +108,7 @@
         <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>hexmate r0-FFFFFFFF,${ImagePath} -O${ImagePath} -FILL=w1:0xFF@0x1400:0x1FFFF</makeCustomizationPostStep>
+        <makeCustomizationPostStep>postBuild${ShExtension} ${ImagePath}</makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
@@ -254,7 +254,7 @@
         <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>hexmate r0-FFFFFFFF,${ImagePath} -O${ImagePath} -FILL=w1:0xFF@0x1400:0x1FFFF</makeCustomizationPostStep>
+        <makeCustomizationPostStep>postBuild${ShExtension} ${ImagePath}</makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>

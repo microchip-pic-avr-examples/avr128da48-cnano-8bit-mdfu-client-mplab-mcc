@@ -287,12 +287,12 @@ static void ParserDataReset(void);
 static bool SequenceNumberValidate(void);
 static bl_result_t OperationalBlockExecute(void);
 static void ResponseSet(
-                        ftp_process_frame_t * bufferPtr,
-                        uint8_t * responsePayload,
-                        ftp_response_status_t responseStatus,
-                        uint8_t sequenceByte,
-                        uint16_t responsePayloadLength
-                        );
+                            ftp_process_frame_t * bufferPtr,
+                            uint8_t * responsePayload,
+                            ftp_response_status_t responseStatus,
+                            uint8_t sequenceByte,
+                            uint16_t responsePayloadLength
+                            );
 static void ClientInfoResponseSet(ftp_process_frame_t * responseData);
 static uint8_t TLVAppend(uint8_t * dataBufferStart, ftp_tlv_t tlvData);
 static ftp_abort_code_t AbortCodeGet(bl_result_t targetStatus);
@@ -306,7 +306,7 @@ bl_result_t FTP_Task(void)
     com_adapter_result_t comResult = COM_FAIL;
 
     // Call the command to load the buffer up with the current receive count
-    comResult = COM_FrameTransfer((uint8_t *) & ftpCommandReceiver.bufferPtr[0], &(ftpCommandReceiver.receiveIndex));
+    comResult = COM_FrameTransfer((uint8_t *)&ftpCommandReceiver.bufferPtr[0], &(ftpCommandReceiver.receiveIndex));
 
     if (comResult == COM_BUFFER_ERROR)
     {
@@ -446,7 +446,7 @@ static bl_result_t OperationalBlockExecute(void)
         else
         {
             ftp_abort_code_t abortCode = AbortCodeGet(processResult);
-            ResponseSet(&ftpResponseSender, (uint8_t *) & abortCode, FTP_ABORT_TRANSFER, ftpHelper.currentSequenceNumber, 1U);
+            ResponseSet(&ftpResponseSender, (uint8_t *)&abortCode, FTP_ABORT_TRANSFER, ftpHelper.currentSequenceNumber, 1U);
         }
         break;
 
@@ -594,5 +594,5 @@ bl_result_t FTP_Initialize(void)
 {
     // Tell com layer the max size of the buffer it can use
     com_adapter_result_t comInitStatus = COM_Initialize(MAX_TRANSFER_SIZE);
-    return (comInitStatus == COM_PASS) ? BL_PASS : BL_FAIL;
+    return (comInitStatus == COM_PASS) ? BL_PASS: BL_FAIL;
 }

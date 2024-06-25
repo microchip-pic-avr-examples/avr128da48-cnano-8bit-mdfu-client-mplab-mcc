@@ -42,11 +42,11 @@ This example will demonstrate:
 
 ## Setup
 
-The following project setup is the same for all the example project pairs. If something goes wrong while running these examples, confirm that the settings in the projects are consistent with the options seen in this section.
+MDFU Client and Application projects have to be configured according to [Client Setup](#client-setup) and [Application Setup](#application-setup). The following project setup is the same for all the example project pairs. If something goes wrong while running these examples, confirm that the settings in the respective projects are consistent with the options seen in the following sections.
 
  **Note**: The values mentioned below are relevant for AVR128DA48, and in case of any other device, these values need to be updated according to the device specifications.
 
-### Client Setup
+### [Client Setup](#client-setup)
 [![mdfu-builder](images/ProjectConfigurationOverview.PNG)](images/ProjectConfigurationOverview.PNG)
 
 **Clock Control**
@@ -78,10 +78,8 @@ If number of bytes consumed by bootloader are 0x1367h then setting BOOTSIZE to 1
 [![NVM](images/NVMSetup.PNG)](images/NVMSetup.PNG)
 
 **UART**
-- Custom Name: UART2
+- Custom Name: UART1
 - Requested Baudrate: 9600
-- Calculated Baudrate: 9600
-- Baud Rate Error (%): 0.00
 - Parity: None
 - Data Size: 8
 - Stop Bits: 1
@@ -98,8 +96,8 @@ If number of bytes consumed by bootloader are 0x1367h then setting BOOTSIZE to 1
 [![UART_PLIB](images/UARTPLIBSetup.PNG)](images/UARTPLIBSetup.PNG)
 
 **UART Pins**
-- UART TX: RB5
-- UART RX: RB4
+- UART TX: PC0
+- UART RX: PC1
 
 [![UART_Pins](images/UARTPortsSetup.PNG)](images/UARTPortsSetup.PNG)
 
@@ -112,18 +110,19 @@ If number of bytes consumed by bootloader are 0x1367h then setting BOOTSIZE to 1
 - I/O Pin Entry: Enabled
 - Memory Verification: Assigned Based on Example Project Naming Convention
 
-**Tip**: Easiest way to get correct device ID is to connect your device and use the "Refresh Debug Tool Status" button in the Dashboard left panel on MPLAB X IDE. Upon clicking on the button and selecting correct PKOB Nano, it prints out the device ID with other information in the output window.
+> [!Tip]: 
+> Easiest way to get correct device ID is to connect your device and use the "Refresh Debug Tool Status" button in the Dashboard left panel on MPLAB X IDE. Upon clicking on the button and selecting correct PKOB Nano, it prints out the device ID with other information in the output window.
 
 [![Refresh Debug Tool Status](images/RefreshDebugToolStatus.png)](images/RefreshDebugToolStatus.png)
 
 **8-Bit MDFU Client I/O**
 
-Upon adding the MDFU Client Library, these pins will be automatically loaded in the PIN configuration section.
+Upon enabling both I/O Options from 8-Bit MDFU Client module, INDICATE and ENTRY pin rows will be automatically loaded in the Pin Grid View. 
 
 These pins must configured as follows:
 
-- BOOT INDICATE: RC6
-- BOOT ENTRY: RC7
+- BOOT INDICATE: PC6
+- BOOT ENTRY: PC7
 
 [![IO-Pins](images/IOPortSetup.PNG)](images/IOPortSetup.PNG)
 
@@ -131,8 +130,6 @@ These pins must configured as follows:
 - BOOT ENTRY: Weak Pullup
 
 [![IO-Settings](images/IOPinsSetup.PNG)](images/IOPinsSetup.PNG)
-
-*Example for Checksum Verification*
 
 **Updating Application Start Address**
 
@@ -145,7 +142,7 @@ This is an important step to ensure that the bootloader and application FLASH se
 
 [![Build Memory Consumption](images/BuildMemoryConsumption.png)](images/BuildMemoryConsumption.png)
 
-- Next step is to update the BOOTSIZE fuse such that the application start address will be the next page start address in FLASH after the memory consumed by bootloader code. More information on BOOTSIZE and CODESIZE fuses can be found in the [AVR128DA48 datasheet](https://www.microchip.com/en-us/product/AVR128DA48) in the *NVMCTRL -> Functional Description -> Memory Organization section.*
+- Next step is to update the BOOTSIZE fuse such that the application start address will be the next page start address in FLASH after the memory consumed by bootloader code. More information on BOOTSIZE and CODESIZE fuses can be found in the [AVR128DA48 data sheet](https://www.microchip.com/en-us/product/AVR128DA48) in the *NVMCTRL -> Functional Description -> Memory Organization section.*
 
 - Since in this example, code consumes 0x13A0, the application start address needs to be configured to 0x1400. This is achieved by setting the BOOTSIZE to 10.
 
@@ -178,14 +175,14 @@ Replace the <Application Start Address> to the Application Start Address value a
 [![IO-Settings](images/LinkerSettings.PNG)](images/LinkerSettings.PNG)
 
 ---
-### Application Setup
+### [Application Setup](#application-setup)
 
 DELAY driver needs to be added for the application project.
 
 [![app-builder](images/AppConfigurationOverview.PNG)](images/AppConfigurationOverview.PNG)
 
 **I/O Pins**
-- GPIO Output: RC6
+- GPIO Output: PC6
 
 [![app_io](images/AppPortSetup.PNG)](images/AppPortSetup.PNG)
 - Custom Name: LED
@@ -233,7 +230,8 @@ while(1)
  * Include the <code style="font-family: 'Courier New', Courier, monospace;">delay.h</code> header file
  * At the top of the main file before the main function, copy and paste the following code:
 
- **Tip**: The address presented below in the __at() is PROGMEM_SIZE - 2 since the hash size used is two bytes. In case of CRC32, the 0xFFFF at the end will be 0xFFFFFFFF, since CRC32 requires four bytes instead of two.
+ >[!Tip]: 
+ >The address presented below in the __at() is PROGMEM_SIZE - 2 since the hash size used is two bytes. In case of CRC32, the 0xFFFF at the end will be 0xFFFFFFFF, since CRC32 requires four bytes instead of two.
 ```
 #include <stdint.h>
 #ifdef __XC8__
@@ -284,14 +282,14 @@ applicationFooter __attribute__((used, section("application_footer"))) = 0xFFFF;
 
    - Add the path to MPLAB X which contains hexmate application to the environment variable **PATH**
    
-      <code>Example path(default):  *C:\Program Files\Microchip\MPLABX\v6.15\mplab_platform\bin*</code>
+      <code>Example path(default):  *C:\Program Files\Microchip\MPLABX\v6.20\mplab_platform\bin*</code>
 
      **Note**: More information on hexmate can be found in the Hexmate User Guide packaged with the compiler docs. It can be found in the docs folder for compiler version under use. 
  
  * Compile the project
  * Running the postBuild script
      
-     Open an command prompt and run the following command in command prompt with appropriate parameters.
+     Open a command prompt window within the project folder and run the following command with appropriate parameters:
    - Command Format: <code>postBuild${ShExtension} ${ImagePath}</code>
    - Example path: ```.\postBuild.bat avr128da48-application-crc32.X.production.hex```
       
@@ -341,7 +339,8 @@ Right click, then select Clean and Build
 
 4. Build the Application Image File using **pyfwimagebuilder**.
 
-**Tip**: The configuration TOML file is generated by the MDFU Client project under *\mcc_generated_files\bootloader\configurations*
+> [!Tip]:
+> The configuration TOML file is generated by the MDFU Client project under *\mcc_generated_files\bootloader\configurations*
 
 [![toml_PATH](images/toml_PATH.png)](images/toml_PATH.png)
 
@@ -353,7 +352,8 @@ Right click, then select Clean and Build
 
 5. Use the **pymdfu** host tool to transfer the application image file to the bootloader.
 
-**Tip**: The COM port of the MCU is found using the MPLAB Data Visualizer.
+> [!Tip]:
+> The COM port of the MCU is found using the MPLAB Data Visualizer.
 
 **Example Command:**
 

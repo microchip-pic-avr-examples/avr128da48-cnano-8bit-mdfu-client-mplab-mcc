@@ -112,7 +112,7 @@ bl_result_t BL_BootCommandProcess(uint8_t * bootDataPtr, uint16_t bufferLength)
 
     // Copy out the data buffer address into a defined packet structure
     bl_command_header_t commandHeader;
-    (void) memcpy(&commandHeader, (void *) & bootDataPtr[BL_BLOCK_HEADER_SIZE], sizeof (bl_command_header_t));
+    (void) memcpy(&commandHeader, (void *) & bootDataPtr[BL_BLOCK_HEADER_SIZE] , sizeof (bl_command_header_t));
     bl_block_header_t blockHeader;
     (void) memcpy(&blockHeader, (void *) bootDataPtr, BL_BLOCK_HEADER_SIZE);
 
@@ -176,7 +176,7 @@ bl_result_t BL_BootCommandProcess(uint8_t * bootDataPtr, uint16_t bufferLength)
                 bl_mem_result_t memoryStatus = BL_EEPROMWrite(
                                                               (eeprom_address_t) commandHeader.startAddress,
                                                               (eeprom_data_t *) & (bootDataPtr[BL_COMMAND_HEADER_SIZE + BL_BLOCK_HEADER_SIZE]),
-                                                              (blockHeader.blockLength - ((BL_COMMAND_HEADER_SIZE + BL_BLOCK_HEADER_SIZE) - 2U))
+                                                              (blockHeader.blockLength - ((BL_COMMAND_HEADER_SIZE + BL_BLOCK_HEADER_SIZE)  - 2U))
                                                               );
 
                 bootCommandStatus = (memoryStatus == BL_MEM_PASS) ? BL_PASS : BL_ERROR_COMMAND_PROCESSING;
@@ -235,13 +235,13 @@ static bl_result_t BootloaderProcessorUnlock(uint8_t * bufferPtr)
     bl_unlock_boot_metadata_t metadataPacket;
     (void) memcpy(&metadataPacket, (void *) bufferPtr, sizeof (bl_unlock_boot_metadata_t));
 
-    // Verify the major version
-    if ((metadataPacket.imageVersionMajor) != (uint8_t) BL_IMAGE_FORMAT_MAJOR_VERSION)
+    // Verify the major version 
+    if((metadataPacket.imageVersionMajor) != (uint8_t) BL_IMAGE_FORMAT_MAJOR_VERSION)
     {
         commandStatus = BL_ERROR_VERIFICATION_FAIL;
     }
     // Verify the minor version is acceptable
-    if (metadataPacket.imageVersionMinor < (uint8_t) BL_IMAGE_FORMAT_MINOR_VERSION)
+    if(metadataPacket.imageVersionMinor <  (uint8_t) BL_IMAGE_FORMAT_MINOR_VERSION)
     {
         commandStatus = BL_ERROR_VERIFICATION_FAIL;
     }
@@ -328,9 +328,9 @@ static bl_result_t BootloaderProcessorUnlock(uint8_t * bufferPtr)
         bootloaderCoreUnlocked = true;
         commandStatus = BL_PASS;
         DownloadAreaErase(
-                          metadataPacket.commandHeader.startAddress,
-                          metadataPacket.commandHeader.pageEraseUnlockKey
-                          );
+                        metadataPacket.commandHeader.startAddress,
+                        metadataPacket.commandHeader.pageEraseUnlockKey
+                        );
     }
 
     return commandStatus;

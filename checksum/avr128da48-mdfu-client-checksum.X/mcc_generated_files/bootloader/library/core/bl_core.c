@@ -112,7 +112,7 @@ bl_result_t BL_BootCommandProcess(uint8_t * bootDataPtr, uint16_t bufferLength)
 
     // Copy out the data buffer address into a defined packet structure
     bl_command_header_t commandHeader;
-    (void) memcpy(&commandHeader, (void *) & bootDataPtr[BL_BLOCK_HEADER_SIZE], sizeof (bl_command_header_t));
+    (void) memcpy(&commandHeader, (void *) & bootDataPtr[BL_BLOCK_HEADER_SIZE] , sizeof (bl_command_header_t));
     bl_block_header_t blockHeader;
     (void) memcpy(&blockHeader, (void *) bootDataPtr, BL_BLOCK_HEADER_SIZE);
 
