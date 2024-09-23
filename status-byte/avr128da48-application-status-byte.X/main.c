@@ -7,7 +7,9 @@
  *
  * @brief This is the generated driver implementation file for the MAIN driver.
  *
- * @version MAIN Driver Version 1.0.0
+ * @version MAIN Driver Version 1.0.2
+ *
+ * @version Package Version: 3.1.2
  */
 
 /*
@@ -32,7 +34,7 @@
  */
 #include "mcc_generated_files/system/system.h"
 #include "mcc_generated_files/timer/delay.h"
-
+#include "mcc_generated_files/reset/rstctrl.h"
 /*
     Main application
  */
@@ -54,6 +56,11 @@ int main(void)
     while (1)
     {
         LED_Toggle();
-        DELAY_milliseconds(200);
+        DELAY_milliseconds(200U);
+
+        if (BTN_GetValue() == 0U)
+        {
+            RSTCTRL_reset();
+        }
     }
 }

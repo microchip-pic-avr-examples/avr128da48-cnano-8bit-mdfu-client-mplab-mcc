@@ -7,6 +7,9 @@
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
                      projectFiles="true">
+        <logicalFolder name="reset" displayName="reset" projectFiles="true">
+          <itemPath>mcc_generated_files/reset/rstctrl.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">
           <logicalFolder name="utils" displayName="utils" projectFiles="true">
             <logicalFolder name="assembler" displayName="assembler" projectFiles="true">
@@ -39,11 +42,18 @@
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
       <itemPath>app_da48.mc3</itemPath>
+      <itemPath>pymdfu_update.sh</itemPath>
+      <itemPath>pymdfu_update.bat</itemPath>
+      <itemPath>build_pro_image.sh</itemPath>
+      <itemPath>build_pro_image.bat</itemPath>
+      <itemPath>build_free_image.sh</itemPath>
+      <itemPath>build_free_image.bat</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
       <itemPath>postBuild.bat</itemPath>
+      <itemPath>postBuild.sh</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -80,11 +90,11 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>noID</platformTool>
         <languageToolchain>XC8</languageToolchain>
-        <languageToolchainVersion>2.46</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="AVR-Dx_DFP" vendor="Microchip" version="2.4.286"/>
+        <pack name="AVR-Dx_DFP" vendor="Microchip" version="2.6.303"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -226,11 +236,11 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>noID</platformTool>
         <languageToolchain>XC8</languageToolchain>
-        <languageToolchainVersion>2.46</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="AVR-Dx_DFP" vendor="Microchip" version="2.4.286"/>
+        <pack name="AVR-Dx_DFP" vendor="Microchip" version="2.6.303"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>

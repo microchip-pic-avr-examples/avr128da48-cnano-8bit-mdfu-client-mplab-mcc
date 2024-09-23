@@ -36,7 +36,7 @@
 /**
  * @ingroup mdfu_client_8bit
  * @def AVR_ARCH
- * This is a macro that corresponds to the current device architecture.
+ * Corresponds to the current device architecture.
  * This macro is used to conditionally compile parts of the code needed
  * for specific architectures inside of the bootloader core firmware.
  */
@@ -67,7 +67,7 @@
 /**
  * @ingroup mdfu_client_8bit
  * @def BL_VECTORED_INTERRUPTS_ENABLED
- * This is a macro that indicates that the bootloader supports vectored interrupts in the application.
+ * Indicates that the bootloader supports vectored interrupts in the application.
  */
 #define BL_VECTORED_INTERRUPTS_ENABLED (0) /* cppcheck-suppress misra-c2012-2.5; This is a false positive. */
 /**
@@ -79,8 +79,7 @@
 /**
  * @ingroup mdfu_client_8bit
  * @def RESET_BIT_MASK
- * This is a macro that corresponds to the bit name needed to perform
- * a software reset on an AVR device.
+ * Corresponds to the bit name needed to perform a software reset on an AVR device.
  */
 #define RESET_BIT_MASK (RSTCTRL_SWRST_bm) /* cppcheck-suppress misra-c2012-2.5; This is a false positive. */
 /**

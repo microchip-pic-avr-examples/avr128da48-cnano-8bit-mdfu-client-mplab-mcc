@@ -29,7 +29,7 @@
 
 #if defined (BL_EEPROM_READ_ENABLED)
 /**@misradeviation{@advisory, 17.8} - The parameter is passed to this wrapper API to decrement and
- * write or erase bytes/words from consecutive memory locations until it's value is zero. 
+ * write or erase bytes/words from consecutive memory locations until its value is zero. 
  * Assigning the value to a different local variable for each API will increase redundancy.
  */
 /**@misradeviation{@advisory, 8.9} - The static buffer should not be declared at local scope

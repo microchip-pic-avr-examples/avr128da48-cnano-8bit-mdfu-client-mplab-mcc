@@ -34,6 +34,7 @@
 
 #include "../pins.h"
 
+static void (*BTN_InterruptHandler)(void);
 static void (*LED_InterruptHandler)(void);
 
 void PIN_MANAGER_Initialize()
@@ -42,7 +43,7 @@ void PIN_MANAGER_Initialize()
   /* OUT Registers Initialization */
     PORTA.OUT = 0x0;
     PORTB.OUT = 0x0;
-    PORTC.OUT = 0x0;
+    PORTC.OUT = 0x40;
     PORTD.OUT = 0x0;
     PORTE.OUT = 0x0;
     PORTF.OUT = 0x0;
@@ -79,7 +80,7 @@ void PIN_MANAGER_Initialize()
     PORTC.PIN4CTRL = 0x0;
     PORTC.PIN5CTRL = 0x0;
     PORTC.PIN6CTRL = 0x0;
-    PORTC.PIN7CTRL = 0x0;
+    PORTC.PIN7CTRL = 0x8;
     PORTD.PIN0CTRL = 0x0;
     PORTD.PIN1CTRL = 0x0;
     PORTD.PIN2CTRL = 0x0;
@@ -119,9 +120,23 @@ void PIN_MANAGER_Initialize()
     PORTMUX.ZCDROUTEA = 0x0;
 
   // register default ISC callback functions at runtime; use these methods to register a custom function
+    BTN_SetInterruptHandler(BTN_DefaultInterruptHandler);
     LED_SetInterruptHandler(LED_DefaultInterruptHandler);
 }
 
+/**
+  Allows selecting an interrupt handler for BTN at application runtime
+*/
+void BTN_SetInterruptHandler(void (* interruptHandler)(void)) 
+{
+    BTN_InterruptHandler = interruptHandler;
+}
+
+void BTN_DefaultInterruptHandler(void)
+{
+    // add your BTN interrupt custom code
+    // or set custom function using BTN_SetInterruptHandler()
+}
 /**
   Allows selecting an interrupt handler for LED at application runtime
 */
@@ -150,6 +165,10 @@ ISR(PORTB_PORT_vect)
 ISR(PORTC_PORT_vect)
 { 
     // Call the interrupt handler for the callback registered at runtime
+    if(VPORTC.INTFLAGS & PORT_INT7_bm)
+    {
+       BTN_InterruptHandler(); 
+    }
     if(VPORTC.INTFLAGS & PORT_INT6_bm)
     {
        LED_InterruptHandler(); 

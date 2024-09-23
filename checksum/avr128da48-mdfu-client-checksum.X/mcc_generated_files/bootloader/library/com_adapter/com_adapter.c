@@ -37,6 +37,13 @@
 #include "com_adapter.h"
 
 /**
+ * @brief Macro workaround for a macro issue in uart
+ */
+#ifndef SERCOM_IsRxReady
+#define SERCOM_IsRxReady        SERCOM__IsRxReady
+#endif
+
+/**
  * @ingroup com_adapter
  * @def START_OF_PACKET_BYTE
  * Special character for identifying the start of the frame.
@@ -69,6 +76,8 @@ static ftp_special_characters_t ftpSpecialCharacters = {
 };
 
 static uint16_t MaxBufferLength = 0U;
+static bool isReceiveWindowOpen = false;
+static bool isEscapedByte = false;
 
 static com_adapter_result_t DataSend(uint8_t *data, size_t length);
 static com_adapter_result_t DataReceive(uint8_t *data, size_t length);
@@ -108,21 +117,21 @@ static com_adapter_result_t DataSend(uint8_t *data, size_t length)
         {
             status = COM_PASS;
 
-            while (!SERCOM.IsTxReady())
+            while (!SERCOM_IsTxReady())
             {
                 // Wait for TX to be ready
             };
             // Call to send the next byte
-            SERCOM.Write(data[byteIndex]);
+            SERCOM_Write(data[byteIndex]);
 
-            if (SERCOM.ErrorGet() != 0U)
+            if (SERCOM_ErrorGet() != 0U)
             {
 #warning "Handle Transmission Error."
             }
         }
     }
 
-    while(!SERCOM.IsTxDone())
+    while (!SERCOM_IsTxDone())
     {
         // Block until last byte shifts out
     }
@@ -144,11 +153,11 @@ static com_adapter_result_t DataReceive(uint8_t *data, size_t length)
         {
             status = COM_PASS;
 
-            if (SERCOM.ErrorGet() == 0U)
+            if (SERCOM_ErrorGet() == 0U)
             {
-                if (SERCOM.IsRxReady())
+                if (SERCOM_IsRxReady())
                 {
-                    data[byteIndex] = SERCOM.Read();
+                    data[byteIndex] = SERCOM_Read();
                 }
                 else
                 {
@@ -159,8 +168,8 @@ static com_adapter_result_t DataReceive(uint8_t *data, size_t length)
             {
                 status = COM_FAIL;
                 // Fully reset the UART
-                SERCOM.Deinitialize();
-                SERCOM.Initialize();
+                SERCOM_Deinitialize();
+                SERCOM_Initialize();
             }
         }
     }
@@ -172,21 +181,18 @@ com_adapter_result_t COM_FrameTransfer(uint8_t *receiveBufferPtr, uint16_t *rece
     uint8_t nextByte = 0U;
     com_adapter_result_t processResult = COM_FAIL;
 
-    if((receiveBufferPtr == NULL) || (receiveIndexPtr == NULL))
+    if ((receiveBufferPtr == NULL) || (receiveIndexPtr == NULL))
     {
         processResult = COM_INVALID_ARG;
     }
     else
     {
-        if(SERCOM.IsRxReady())
+        if (SERCOM_IsRxReady())
         {
             processResult = DataReceive(&nextByte, 1U);
         }
-        if(processResult == COM_PASS)
+        if (processResult == COM_PASS)
         {
-            static bool isReceiveWindowOpen;
-            static bool isEscapedByte;
-
             if (nextByte == ftpSpecialCharacters.StartOfPacketCharacter)
             {
                 // Open the buffer window
@@ -219,7 +225,7 @@ com_adapter_result_t COM_FrameTransfer(uint8_t *receiveBufferPtr, uint16_t *rece
                         frameCheckSequence = (uint16_t) ((((uint16_t) highByte) << 8) | lowByte);
                     }
 
-                    if(fcs == frameCheckSequence)
+                    if (fcs == frameCheckSequence)
                     {
                         // Set the status to execute the command
                         processResult = COM_PASS;
@@ -276,7 +282,7 @@ com_adapter_result_t COM_FrameSet(uint8_t *responseBufferPtr, uint16_t responseL
 {
     com_adapter_result_t processResult = COM_FAIL;
 
-    if((responseBufferPtr == NULL) || (responseLength == 0U))
+    if ((responseBufferPtr == NULL) || (responseLength == 0U))
     {
         processResult = COM_INVALID_ARG;
     }
@@ -287,19 +293,19 @@ com_adapter_result_t COM_FrameSet(uint8_t *responseBufferPtr, uint16_t responseL
 
         processResult = DataSend(&(ftpSpecialCharacters.StartOfPacketCharacter), 1U);
 
-        if(processResult == COM_PASS)
+        if (processResult == COM_PASS)
         {
             uint8_t nextByte;
             uint16_t sentByteCount = 0x00U;
 
             while (sentByteCount < (responseLength + FRAME_CHECK_SIZE))
             {/* cppcheck-suppress misra-c2012-15.4 */
-                if(sentByteCount == responseLength)
+                if (sentByteCount == responseLength)
                 {
                     // send the low byte first
-                    nextByte = (uint8_t)(frameCheck & 0x00FFU);
+                    nextByte = (uint8_t) (frameCheck & 0x00FFU);
                 }
-                else if(sentByteCount == (responseLength + 1U))
+                else if (sentByteCount == (responseLength + 1U))
                 {
                     // send the high byte first
                     nextByte = (uint8_t) (frameCheck >> 8);
@@ -344,9 +350,12 @@ com_adapter_result_t COM_FrameSet(uint8_t *responseBufferPtr, uint16_t responseL
 com_adapter_result_t COM_Initialize(uint16_t maximumBufferLength)
 {
     com_adapter_result_t result = COM_FAIL;
-    if(maximumBufferLength != 0U)
+    if (maximumBufferLength != 0U)
     {
         MaxBufferLength = maximumBufferLength;
+        isReceiveWindowOpen = false;
+        isEscapedByte = false;
+        SERCOM_Initialize();
         result = COM_PASS;
     }
     else

@@ -1,0 +1,1 @@
+pyfwimagebuilder build -v debug -i ./dist/free/production/avr128da48-application-checksum.X.production.hex -c ../avr128da48-mdfu-client-checksum.X/mcc_generated_files/bootloader/configurations/bootloader_configuration.toml -o new_application.img

@@ -52,37 +52,37 @@
 /* Normal Mode, Baud register value */
 #define USART1_BAUD_RATE(BAUD_RATE) (((float)20000000 * 64 / (16 * (float)BAUD_RATE)) + 0.5)
 
-#define UART1_interface UART1
+#define SERCOM_interface SERCOM
 
 
-#define UART1_Initialize     USART1_Initialize
-#define UART1_Deinitialize   USART1_Deinitialize
-#define UART1_Write          USART1_Write
-#define UART1_Read           USART1_Read
-#define UART1_IsRxReady      USART1_IsRxReady
-#define UART1_IsTxReady      USART1_IsTxReady
-#define UART1_IsTxDone       USART1_IsTxDone
+#define SERCOM_Initialize     USART1_Initialize
+#define SERCOM_Deinitialize   USART1_Deinitialize
+#define SERCOM_Write          USART1_Write
+#define SERCOM_Read           USART1_Read
+#define SERCOM_IsRxReady      USART1_IsRxReady
+#define SERCOM_IsTxReady      USART1_IsTxReady
+#define SERCOM_IsTxDone       USART1_IsTxDone
 
-#define UART1_TransmitEnable       USART1_TransmitEnable
-#define UART1_TransmitDisable      USART1_TransmitDisable
-#define UART1_AutoBaudSet          USART1_AutoBaudSet
-#define UART1_AutoBaudQuery        USART1_AutoBaudQuery
-#define UART1_IsAutoBaudDetectError        USART1_IsAutoBaudDetectError
-#define UART1_AutoBaudDetectErrorReset     USART1_AutoBaudDetectErrorReset
-#define UART1_BRGCountSet               (NULL)
-#define UART1_BRGCountGet               (NULL)
-#define UART1_BaudRateSet               (NULL)
-#define UART1_BaudRateGet               (NULL)
-#define UART1_AutoBaudEventEnableGet    (NULL)
-#define UART1_ErrorGet             USART1_ErrorGet
+#define SERCOM_TransmitEnable       USART1_TransmitEnable
+#define SERCOM_TransmitDisable      USART1_TransmitDisable
+#define SERCOM_AutoBaudSet          USART1_AutoBaudSet
+#define SERCOM_AutoBaudQuery        USART1_AutoBaudQuery
+#define SERCOM_IsAutoBaudDetectError        USART1_IsAutoBaudDetectError
+#define SERCOM_AutoBaudDetectErrorReset     USART1_AutoBaudDetectErrorReset
+#define SERCOM_BRGCountSet               (NULL)
+#define SERCOM_BRGCountGet               (NULL)
+#define SERCOM_BaudRateSet               (NULL)
+#define SERCOM_BaudRateGet               (NULL)
+#define SERCOM_AutoBaudEventEnableGet    (NULL)
+#define SERCOM_ErrorGet             USART1_ErrorGet
 
-#define UART1_TxCompleteCallbackRegister     (NULL)
-#define UART1_RxCompleteCallbackRegister      (NULL)
-#define UART1_TxCollisionCallbackRegister  (NULL)
-#define UART1_FramingErrorCallbackRegister USART1_FramingErrorCallbackRegister
-#define UART1_OverrunErrorCallbackRegister USART1_OverrunErrorCallbackRegister
-#define UART1_ParityErrorCallbackRegister  USART1_ParityErrorCallbackRegister
-#define UART1_EventCallbackRegister        (NULL)
+#define SERCOM_TxCompleteCallbackRegister     (NULL)
+#define SERCOM_RxCompleteCallbackRegister      (NULL)
+#define SERCOM_TxCollisionCallbackRegister  (NULL)
+#define SERCOM_FramingErrorCallbackRegister USART1_FramingErrorCallbackRegister
+#define SERCOM_OverrunErrorCallbackRegister USART1_OverrunErrorCallbackRegister
+#define SERCOM_ParityErrorCallbackRegister  USART1_ParityErrorCallbackRegister
+#define SERCOM_EventCallbackRegister        (NULL)
 
 
 /**
@@ -110,7 +110,7 @@ typedef union {
  * @ingroup usart1
  * @brief External object for usart1_interface.
  */
-extern const uart_drv_interface_t UART1;
+extern const uart_drv_interface_t SERCOM;
 
 /**
  * @ingroup usart1

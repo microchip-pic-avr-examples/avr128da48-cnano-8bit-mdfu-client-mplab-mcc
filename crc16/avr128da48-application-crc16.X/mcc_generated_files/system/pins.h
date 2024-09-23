@@ -38,6 +38,25 @@
 #include <avr/io.h>
 #include "./port.h"
 
+//get/set BTN aliases
+#define BTN_SetHigh() do { PORTC_OUTSET = 0x80; } while(0)
+#define BTN_SetLow() do { PORTC_OUTCLR = 0x80; } while(0)
+#define BTN_Toggle() do { PORTC_OUTTGL = 0x80; } while(0)
+#define BTN_GetValue() (VPORTC.IN & (0x1 << 7))
+#define BTN_SetDigitalInput() do { PORTC_DIRCLR = 0x80; } while(0)
+#define BTN_SetDigitalOutput() do { PORTC_DIRSET = 0x80; } while(0)
+#define BTN_SetPullUp() do { PORTC_PIN7CTRL  |= PORT_PULLUPEN_bm; } while(0)
+#define BTN_ResetPullUp() do { PORTC_PIN7CTRL  &= ~PORT_PULLUPEN_bm; } while(0)
+#define BTN_SetInverted() do { PORTC_PIN7CTRL  |= PORT_INVEN_bm; } while(0)
+#define BTN_ResetInverted() do { PORTC_PIN7CTRL  &= ~PORT_INVEN_bm; } while(0)
+#define BTN_DisableInterruptOnChange() do { PORTC.PIN7CTRL = (PORTC.PIN7CTRL & ~PORT_ISC_gm) | 0x0 ; } while(0)
+#define BTN_EnableInterruptForBothEdges() do { PORTC.PIN7CTRL = (PORTC.PIN7CTRL & ~PORT_ISC_gm) | 0x1 ; } while(0)
+#define BTN_EnableInterruptForRisingEdge() do { PORTC.PIN7CTRL = (PORTC.PIN7CTRL & ~PORT_ISC_gm) | 0x2 ; } while(0)
+#define BTN_EnableInterruptForFallingEdge() do { PORTC.PIN7CTRL = (PORTC.PIN7CTRL & ~PORT_ISC_gm) | 0x3 ; } while(0)
+#define BTN_DisableDigitalInputBuffer() do { PORTC.PIN7CTRL = (PORTC.PIN7CTRL & ~PORT_ISC_gm) | 0x4 ; } while(0)
+#define BTN_EnableInterruptForLowLevelSensing() do { PORTC.PIN7CTRL = (PORTC.PIN7CTRL & ~PORT_ISC_gm) | 0x5 ; } while(0)
+#define PC7_SetInterruptHandler BTN_SetInterruptHandler
+
 //get/set LED aliases
 #define LED_SetHigh() do { PORTC_OUTSET = 0x40; } while(0)
 #define LED_SetLow() do { PORTC_OUTCLR = 0x40; } while(0)
@@ -64,6 +83,27 @@
  * @return none
  */
 void PIN_MANAGER_Initialize();
+
+/**
+ * @ingroup  pinsdriver
+ * @brief Default Interrupt Handler for BTN pin. 
+ *        This is a predefined interrupt handler to be used together with the BTN_SetInterruptHandler() method.
+ *        This handler is called every time the BTN ISR is executed. 
+ * @pre PIN_MANAGER_Initialize() has been called at least once
+ * @param none
+ * @return none
+ */
+void BTN_DefaultInterruptHandler(void);
+
+/**
+ * @ingroup  pinsdriver
+ * @brief Interrupt Handler Setter for BTN pin input-sense-config functionality.
+ *        Allows selecting an interrupt handler for BTN at application runtime
+ * @pre PIN_MANAGER_Initialize() has been called at least once
+ * @param InterruptHandler function pointer.
+ * @return none
+ */
+void BTN_SetInterruptHandler(void (* interruptHandler)(void)) ; 
 
 /**
  * @ingroup  pinsdriver

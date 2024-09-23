@@ -21,9 +21,9 @@
  * THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY, THAT YOU
  * HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- *  @file    bl_memory.h
- *  @defgroup bl_memory Memory Helper
- *  @brief   This file contains prototypes and data types for the helper functions used with the (Non-Volatile Memory) NVM peripheral driver
+ * @file    bl_memory.h
+ * @defgroup bl_memory Memory Helper
+ * @brief   This file contains prototypes and data types for the helper functions used with the Non-Volatile Memory (NVM) peripheral driver
  *
  */
 #ifndef BL_MEMORY_H

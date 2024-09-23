@@ -1,0 +1,1 @@
+pyfwimagebuilder build -v debug -i ./dist/pro/production/avr128da48-application-reset-vector.X.production.hex -c ../avr128da48-mdfu-client-reset-vector.X/mcc_generated_files/bootloader/configurations/bootloader_configuration.toml -o new_application.img

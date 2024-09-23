@@ -47,7 +47,7 @@
   Section: Driver Interface
  */
 
-const uart_drv_interface_t UART1 = {
+const uart_drv_interface_t SERCOM = {
     .Initialize = &USART1_Initialize,
     .Deinitialize = &USART1_Deinitialize,
     .Read = &USART1_Read,

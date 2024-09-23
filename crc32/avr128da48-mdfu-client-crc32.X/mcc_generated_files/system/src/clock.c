@@ -55,7 +55,7 @@ void CLOCK_Initialize(void)
             | (0 << CLKCTRL_XOSC32KS_bp)   // XOSC32KS disabled
             );
     ccp_write_io((void*)&(CLKCTRL.OSCHFCTRLA),(0 << CLKCTRL_AUTOTUNE_bp)   // AUTOTUNE disabled
-            | CLKCTRL_FRQSEL_20M_gc   // FRQSEL 20 MHz system clock
+            | CLKCTRL_FRQSEL_24M_gc   // FRQSEL 24 MHz system clock
             | (0 << CLKCTRL_RUNSTDBY_bp)   // RUNSTDBY disabled
             );
     ccp_write_io((void*)&(CLKCTRL.OSCHFTUNE),0x0   // TUNE 0x0

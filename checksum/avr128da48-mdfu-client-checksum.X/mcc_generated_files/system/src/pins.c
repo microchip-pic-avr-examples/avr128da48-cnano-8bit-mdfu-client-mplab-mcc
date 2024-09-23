@@ -34,8 +34,8 @@
 
 #include "../pins.h"
 
-static void (*BL_INDICATOR_InterruptHandler)(void);
 static void (*BL_ENTRY_InterruptHandler)(void);
+static void (*BL_INDICATOR_InterruptHandler)(void);
 static void (*IO_PC1_InterruptHandler)(void);
 static void (*IO_PC0_InterruptHandler)(void);
 
@@ -76,7 +76,7 @@ void PIN_MANAGER_Initialize()
     PORTB.PIN6CTRL = 0x0;
     PORTB.PIN7CTRL = 0x0;
     PORTC.PIN0CTRL = 0x0;
-    PORTC.PIN1CTRL = 0x0;
+    PORTC.PIN1CTRL = 0x8;
     PORTC.PIN2CTRL = 0x0;
     PORTC.PIN3CTRL = 0x0;
     PORTC.PIN4CTRL = 0x0;
@@ -122,25 +122,12 @@ void PIN_MANAGER_Initialize()
     PORTMUX.ZCDROUTEA = 0x0;
 
   // register default ISC callback functions at runtime; use these methods to register a custom function
-    BL_INDICATOR_SetInterruptHandler(BL_INDICATOR_DefaultInterruptHandler);
     BL_ENTRY_SetInterruptHandler(BL_ENTRY_DefaultInterruptHandler);
+    BL_INDICATOR_SetInterruptHandler(BL_INDICATOR_DefaultInterruptHandler);
     IO_PC1_SetInterruptHandler(IO_PC1_DefaultInterruptHandler);
     IO_PC0_SetInterruptHandler(IO_PC0_DefaultInterruptHandler);
 }
 
-/**
-  Allows selecting an interrupt handler for BL_INDICATOR at application runtime
-*/
-void BL_INDICATOR_SetInterruptHandler(void (* interruptHandler)(void)) 
-{
-    BL_INDICATOR_InterruptHandler = interruptHandler;
-}
-
-void BL_INDICATOR_DefaultInterruptHandler(void)
-{
-    // add your BL_INDICATOR interrupt custom code
-    // or set custom function using BL_INDICATOR_SetInterruptHandler()
-}
 /**
   Allows selecting an interrupt handler for BL_ENTRY at application runtime
 */
@@ -153,6 +140,19 @@ void BL_ENTRY_DefaultInterruptHandler(void)
 {
     // add your BL_ENTRY interrupt custom code
     // or set custom function using BL_ENTRY_SetInterruptHandler()
+}
+/**
+  Allows selecting an interrupt handler for BL_INDICATOR at application runtime
+*/
+void BL_INDICATOR_SetInterruptHandler(void (* interruptHandler)(void)) 
+{
+    BL_INDICATOR_InterruptHandler = interruptHandler;
+}
+
+void BL_INDICATOR_DefaultInterruptHandler(void)
+{
+    // add your BL_INDICATOR interrupt custom code
+    // or set custom function using BL_INDICATOR_SetInterruptHandler()
 }
 /**
   Allows selecting an interrupt handler for IO_PC1 at application runtime
@@ -195,13 +195,13 @@ ISR(PORTB_PORT_vect)
 ISR(PORTC_PORT_vect)
 { 
     // Call the interrupt handler for the callback registered at runtime
-    if(VPORTC.INTFLAGS & PORT_INT6_bm)
-    {
-       BL_INDICATOR_InterruptHandler(); 
-    }
     if(VPORTC.INTFLAGS & PORT_INT7_bm)
     {
        BL_ENTRY_InterruptHandler(); 
+    }
+    if(VPORTC.INTFLAGS & PORT_INT6_bm)
+    {
+       BL_INDICATOR_InterruptHandler(); 
     }
     if(VPORTC.INTFLAGS & PORT_INT1_bm)
     {

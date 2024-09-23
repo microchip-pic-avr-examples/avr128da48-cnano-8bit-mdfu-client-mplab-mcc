@@ -47,7 +47,7 @@
   Section: Driver Interface
  */
 
-const uart_drv_interface_t UART1 = {
+const uart_drv_interface_t SERCOM = {
     .Initialize = &USART1_Initialize,
     .Deinitialize = &USART1_Deinitialize,
     .Read = &USART1_Read,
@@ -100,7 +100,7 @@ void USART1_Initialize(void)
 {
     // Set the USART1 module to the options selected in the user interface.
 
-    //BAUD 8333; 
+    //BAUD 10000; 
     USART1.BAUD = (uint16_t)USART1_BAUD_RATE(9600);
 	
     // ABEIE disabled; DREIE disabled; LBME disabled; RS485 DISABLE; RXCIE disabled; RXSIE disabled; TXCIE disabled; 
