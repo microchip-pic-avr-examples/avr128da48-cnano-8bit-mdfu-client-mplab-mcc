@@ -6,7 +6,7 @@
 
 This example demonstrates how to utilize the MPLAB Code Configurator (MCC) generated code to set up various basic Microchip Device Firmware Update (MDFU) bootloader solutions for the AVR128DA48 Curiosity Nano Evaluation board.
 
-The MDFU is a firmware update system that employs a device-independent host application to update application firmware. The application image loaded into the host adheres to a custom file format, incorporating device and application-specific parameters necessary for the update. This repository offers a foundational setup to configure and customize the MCC Melody 8-Bit MDFU Client library on the AVR128DA48 Curiosity Nano Base for Click boards™, along with instructions for executing the examples.
+The MDFU is a firmware update system that employs a device-independent host application to update application firmware. The application image loaded into the host adheres to a custom file format, incorporating device and application-specific parameters necessary for the update. This repository offers a foundational setup to configure and customize the MCC Melody 8-Bit MDFU Client library on the AVR128DA48 Curiosity Nano Evaluation board, along with instructions for executing the examples.
 
 This example demonstrates:
 - How to configure the 8-Bit MDFU Client Library in MCC Melody for different verification schemes
