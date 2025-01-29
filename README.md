@@ -301,6 +301,7 @@ This step is different depending on the used compiler.
 ## Operation
 This section is a walkthrough on how to run the examples in this repository. This example shows how to execute the Checksum verification example and update the device Flash memory with the Checksum application image to demonstrate a successful device firmware update (DFU). For additional communication protocol operation information, refer to the pages listed below:
 - [SPI Example Operation](spi/Readme.md#operation)
+- [I<sup>2</sup>C Example Operation](i2c/Readme.md#operation)
 
 **8-Bit MDFU Client Operation**
 
