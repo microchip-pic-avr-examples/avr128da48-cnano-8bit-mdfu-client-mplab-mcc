@@ -76,8 +76,8 @@ For example, if the number of bytes consumed by bootloader is 0x1367h, then sett
 **8-Bit MDFU Client**
 
 This section will guide you through the setup process for UART communication. For more details on configuring and operating other communication protocols, please refer to the pages listed below
-- [SPI Communication](spi/Readme.md)
-- [I<sup>2</sup>C Communication](i2c/Readme.md)
+- [SPI Communication](spi/README.md)
+- [I<sup>2</sup>C Communication](i2c/README.md)
 
 **8-Bit MDFU Client with UART Communication**
 
@@ -300,8 +300,8 @@ This step is different depending on the used compiler.
 
 ## Operation
 This section is a walkthrough on how to run the examples in this repository. This example shows how to execute the Checksum verification example and update the device Flash memory with the Checksum application image to demonstrate a successful device firmware update (DFU). For additional communication protocol operation information, refer to the pages listed below:
-- [SPI Example Operation](spi/Readme.md#operation)
-- [I<sup>2</sup>C Example Operation](i2c/Readme.md#operation)
+- [SPI Example Operation](spi/README.md#operation)
+- [I<sup>2</sup>C Example Operation](i2c/README.md#operation)
 
 **8-Bit MDFU Client Operation**
 
