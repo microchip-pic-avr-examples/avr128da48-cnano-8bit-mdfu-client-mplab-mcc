@@ -13,7 +13,7 @@
  */
 
 /*
-© [2024] Microchip Technology Inc. and its subsidiaries.
+© [2025] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip
     software and any derivatives exclusively with Microchip products.
@@ -43,17 +43,17 @@
 #include <xc.h>
 #endif
 
-volatile const uint32_t
-#ifdef __XC8__
-__at(0x1FFFC)
-#endif
+volatile const uint32_t 
+#ifdef __XC8__ 
+__at(0x1FFFC) 
+#endif 
 applicationFooter __attribute__((used, section("application_footer"))) = 0xFFFFFFFF;
 
 int main(void)
 {
     SYSTEM_Initialize();
 
-    while (1)
+    while(1)
     {
         LED_Toggle();
         DELAY_milliseconds(200U);
