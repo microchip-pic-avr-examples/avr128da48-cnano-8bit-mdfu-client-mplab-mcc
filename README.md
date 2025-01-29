@@ -77,6 +77,7 @@ For example, if the number of bytes consumed by bootloader is 0x1367h, then sett
 
 This section will guide you through the setup process for UART communication. For more details on configuring and operating other communication protocols, please refer to the pages listed below
 - [SPI Communication](spi/Readme.md)
+- [I<sup>2</sup>C Communication](i2c/Readme.md)
 
 **8-Bit MDFU Client with UART Communication**
 
